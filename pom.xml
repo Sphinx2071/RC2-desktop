@@ -110,6 +110,7 @@
         <module>Upload</module>
         <module>Report</module>
         <module>Setup</module>
+        <module>setupFun</module>
 
     </modules>
 
