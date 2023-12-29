@@ -14,25 +14,8 @@
 
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::page}, #{SetupAppName})}">
-<th:block th:fragment="page">
-<main role="main" class="container">
-    <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
+      xmlns:th="http://www.thymeleaf.org">
+<h1 class="display-5" th:fragment="sectionHeading(text)" th:text="${text}"></h1>
 
-    <div th:replace="~{fragments/menu :: item(
-        @{/reliefconfig}, #{ConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/healthconfig}, #{HealthConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/templates/barcode}, #{GenBarcodeBtnLabel}, @{/img/create_barcodes_icon.svg}, #{GenBarcodeBtnLabel}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/resetserver}, #{ResertSrvBtnLabel}, @{/img/other_options_icon.svg}, #{PermanentlyDeleteServerWarning}, false)}"></div>
-    <!--todo: figure out last argument for my implementation.
-    Old implementation(${disableButtons || isNoRegMode}) replaced with hardcoded boolean values above.-->
-</main>
-</th:block>
+<h1 class="display-5" th:fragment="headingWithName(text, name)" th:text="|${text} — ${name}|"></h1>
 </html>

@@ -197,6 +197,26 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.uw.cse.ifrcdemo</groupId>
+            <artifactId>PlanningSharedLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.uw.cse.ifrcdemo</groupId>
+            <artifactId>PlanningSharedLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.uw.cse.ifrcdemo</groupId>
+            <artifactId>PlanningSharedLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.uw.cse.ifrcdemo</groupId>
+            <artifactId>PlanningSharedLib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.uw.cse.ifrcdemo</groupId>
+            <artifactId>XlsxConverterServer</artifactId>
+        </dependency>
 
     </dependencies>
 </project>
