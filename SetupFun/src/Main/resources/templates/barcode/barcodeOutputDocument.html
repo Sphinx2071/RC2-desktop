@@ -13,29 +13,15 @@
   -->
 
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::main}, #{RC2Relief})}">
-<th:block th:fragment="page">
-    <main role="main" class="container">
-        <div th:replace="~{fragments/menu :: heading(#{ConfigSrvBtnLabel})}"></div>
-        <div class="row">
-            <form method="post" class="col-12" th:object="${reliefConfigModel}">
-                <div class="form-group row">
-                    <label for="registrationMode" class="col-2 col-form-label"
-                        th:list="#{WorkflowModeLabel}">
-                    </label>
-                    <!--todo: build relief buttons.  need to connect to authorizationType.values to build list from enum-->
-                        <div>                        </div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" th:href="@{/css/barcodeStyle.css}"/>
+    <link rel="stylesheet" th:href="@{/css/barcodePdfStyle.css}"/>
+</head>
 
-
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigLocalBtnLabel}"></button>
-                <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
-            </form>
-        </div>
-    </main>
-</th:block>
+<body>
+<div th:insert="~{barcode/barcodeOutputCommon :: commonBarcodeOutput}"></div>
+</body>
 </html>
-<!--<th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{WorkflowModeLabel})}"/>-->

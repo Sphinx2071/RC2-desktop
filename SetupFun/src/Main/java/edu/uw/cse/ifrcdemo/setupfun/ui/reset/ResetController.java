@@ -17,9 +17,9 @@ public class ResetController {
     public ResetController() {
     }
 
-
+    //todo: this button needs to call LoginTask and ResetTask from SharedLib, both use an object that use swing
     @RequestMapping("/resetserver")
-    public ModelAndView MainMenuView() {
+    public ModelAndView ResetView() {
         ModelAndView modelAndView = new ModelAndView(RESET_TEMPLATE);
 
         return modelAndView;

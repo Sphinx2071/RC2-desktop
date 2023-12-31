@@ -19,7 +19,7 @@ public class HealthConfigController {
 
 
     @RequestMapping("/healthconfig")
-    public ModelAndView MainMenuView() {
+    public ModelAndView HealthConfigView() {
         ModelAndView modelAndView = new ModelAndView(HEALTH_CONFIG_TEMPLATE);
         modelAndView.addObject("disableButtons", true);
 

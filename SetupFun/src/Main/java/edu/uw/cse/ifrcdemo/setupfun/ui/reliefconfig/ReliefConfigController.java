@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("reliefconfig")
-//@SessionAttributes(types = { ReliefConfigModel.class })
+@SessionAttributes(types = { ReliefConfigModel.class })
 public class ReliefConfigController {
 
     private static final String RELIEF_CONFIG_TEMPLATE = "reliefconfig/reliefConfig";

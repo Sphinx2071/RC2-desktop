@@ -31,7 +31,7 @@
 
 
     <properties>
-        <mainClass>edu.uw.cse.ifrcdemo.setupfun.SetupApplication</mainClass>
+        <mainClass>edu.uw.cse.ifrcdemo.setupfun.SetupFunApplication</mainClass>
         <app-designer.directory>${project.basedir}/../app-designer</app-designer.directory>
         <generated-zip.output.directory>${project.build.directory}/generated-resources</generated-zip.output.directory>
     </properties>

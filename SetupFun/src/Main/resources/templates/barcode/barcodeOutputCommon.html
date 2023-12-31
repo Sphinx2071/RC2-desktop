@@ -13,29 +13,22 @@
   -->
 
 <!DOCTYPE html>
+
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::main}, #{RC2Relief})}">
-<th:block th:fragment="page">
-    <main role="main" class="container">
-        <div th:replace="~{fragments/menu :: heading(#{ConfigSrvBtnLabel})}"></div>
-        <div class="row">
-            <form method="post" class="col-12" th:object="${reliefConfigModel}">
-                <div class="form-group row">
-                    <label for="registrationMode" class="col-2 col-form-label"
-                        th:list="#{WorkflowModeLabel}">
-                    </label>
-                    <!--todo: build relief buttons.  need to connect to authorizationType.values to build list from enum-->
-                        <div>                        </div>
+      xmlns:th="http://www.thymeleaf.org">
 
-
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigLocalBtnLabel}"></button>
-                <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
-            </form>
+<div th:fragment="commonBarcodeOutput">
+    <div class="vouchers" th:object="${barcodeFormModel}">
+        <div class="voucher" th:each="voucher:*{voucherList}">
+            <img class="red-cross-logo" th:src="@{/img/banner.jpg}">
+            <div class="voucher-text">
+                <p th:text="${voucher.text}"></p>
+            </div>
+            <div class="voucher-barcode">
+                <img th:src="${voucher.barcodeDataUri}">
+            </div>
         </div>
-    </main>
-</th:block>
+    </div>
+</div>
+
 </html>
-<!--<th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{WorkflowModeLabel})}"/>-->
