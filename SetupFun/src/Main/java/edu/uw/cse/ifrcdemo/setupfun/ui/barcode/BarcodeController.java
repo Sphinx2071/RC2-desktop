@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-@RequestMapping("/barcodeGenerator")
+@RequestMapping("/barcode")
 @SessionAttributes(types = BarcodeFormModel.class)
 public class BarcodeController {
     private static final String BARCODE_GENERATOR = "barcode/barcodeGenerator";
@@ -62,7 +62,7 @@ public class BarcodeController {
         return new ModelAndView(BARCODE_GENERATOR);
     }
 
-    @PostMapping("barcodeGenerator")
+    @PostMapping("")
     public ModelAndView generateBarcodes(
             @Valid @ModelAttribute("barcodeFormModel") BarcodeFormModel barcodeFormModel,
             BindingResult bindingResult) {
@@ -71,7 +71,7 @@ public class BarcodeController {
         }
 
         // Display the generated barcodes
-        return new ModelAndView("redirect:barcodeOutput");
+        return new ModelAndView("redirect:barcode/barcodeOutput");
     }
 
     @GetMapping("barcodeOutput")

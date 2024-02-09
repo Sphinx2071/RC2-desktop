@@ -31,7 +31,7 @@ public class BarcodeFormModel {
         return rangeEnd;
     }
 
-    public void setEndIndex(Integer rangeEnd){
+    public void setRangeEnd(Integer rangeEnd){
         this.rangeEnd = rangeEnd;
     }
 

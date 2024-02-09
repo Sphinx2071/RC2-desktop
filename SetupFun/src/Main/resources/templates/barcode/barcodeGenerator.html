@@ -27,7 +27,6 @@
                        th:text="#{TextLabel}"></label>
                 <div class="col-10">
                     <input type="text" class="form-control" id="barcodeText"
-                           th:errorclass="is-invalid"
                            th:insert="~{fragments/feedback :: msg('barcodeFormModel.text')}"
                            th:placeholder="#{TextLabel}" th:field="*{text}">
                 </div>
@@ -38,7 +37,6 @@
                        th:text="#{StartBarcodeRangeLabel}"></label>
                 <div class="col-10">
                     <input type="text" class="form-control" id="barcodeRangeStart"
-                           th:errorclass="is-invalid"
                            th:insert="~{fragments/feedback :: generic}"
                            th:field="*{rangeStart}"></input>
                 </div>
@@ -49,7 +47,6 @@
                        th:text="#{EndBarcodeRangeLabel}"></label>
                 <div class="col-10">
                     <input type="text" class="form-control" id="barcodeRangeEnd"
-                           th:errorclass="is-invalid"
                            th:insert="~{fragments/feedback :: generic}"
                            th:field="*{rangeEnd}"></input>
                 </div>

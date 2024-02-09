@@ -15,24 +15,44 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::page}, #{SetupAppName})}">
-<th:block th:fragment="page">
+      th:replace="~{fragments/layout :: layout (~{::main}, #{ErrorLabel})}">
+<body>
 <main role="main" class="container">
-    <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/reliefconfig}, #{ConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/healthconfig}, #{HealthConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/barcode}, #{GenBarcodeBtnLabel}, @{/img/create_barcodes_icon.svg}, #{GenBarcodeBtnLabel}, false)}"></div>
-
-    <div th:replace="~{fragments/menu :: item(
-        @{/}, #{ResertSrvBtnLabel}, @{/img/other_options_icon.svg}, #{PermanentlyDeleteServerWarning}, false)}"></div>
-    <!--todo: figure out last argument for my implementation.
-    Old implementation(${disableButtons || isNoRegMode}) replaced with hardcoded boolean values above.-->
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ErrorLabel})}"/>
+    <table>
+        <tr>
+            <td>Date</td>
+            <td th:text="${timestamp}"/>
+        </tr>
+        <tr>
+            <td>Path</td>
+            <td th:text="${path}"/>
+        </tr>
+        <tr>
+            <td>Error</td>
+            <td th:text="${error}"/>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:text="${status}"/>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td th:text="${message}"/>
+        </tr>
+        <tr>
+            <td>Exception</td>
+            <td th:text="${exception}"/>
+        </tr>
+        <br>
+        <tr>
+            <td>Trace</td>
+            <td>
+                <pre th:text="${trace}"/>
+            </td>
+        </tr>
+    </table>
 </main>
-</th:block>
+
+</body>
 </html>

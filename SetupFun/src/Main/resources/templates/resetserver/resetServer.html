@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, #{SetupAppName})}">
+<th:block th:fragment="page">
+    <main role="main" class="container">
+        <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
+
+
+    </main>
+</th:block>
+</html>
