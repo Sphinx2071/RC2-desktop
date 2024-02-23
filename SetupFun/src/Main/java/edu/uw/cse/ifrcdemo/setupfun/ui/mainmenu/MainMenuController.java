@@ -18,13 +18,11 @@ public class MainMenuController {
     }
 
 
-    @RequestMapping("/mainmenu")
+    @RequestMapping(value={"/mainmenu" , "/"})
     public ModelAndView MainMenuView() {
         ModelAndView modelAndView = new ModelAndView(MAIN_MENU_TEMPLATE);
         modelAndView.addObject("disableButtons", true);
 
         return modelAndView;
     }
-
-
 }

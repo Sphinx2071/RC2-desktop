@@ -11,14 +11,25 @@
   ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   ~
   -->
-
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::main}, #{RC2Relief})}">
-<th:block th:fragment="page">
-    <main role="main" class="container">
-        <div th:replace="~{fragments/menu :: heading(#{HealthConfigSrvBtnLabel})}"></div>
-        <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{BeneficiaryUnitLabel})}"/>
-    </main>
-</th:block>
+      th:replace="~{fragments/layout :: layout (~{::main}, #{ServerSettings})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{HealthConfigSrvBtnLabel})}"/>
+    <div>
+        <div class="card card-body">
+            <div class="row">
+                <form method="post" class="col-12" th:object="${healthConfigModel}">
+
+
+                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigLocalBtnLabel}"></button>
+                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -11,46 +11,23 @@
   ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   ~
   -->
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::main}, #{ServerSettings})}">
-<body>
-<main role="main" class="container">
-    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ConfigSrvBtnLabel})}"/>
-    <div>
-        <div class="card card-body">
-            <div class="row">
-                <form method="post" class="col-12" th:object="${reliefConfigModel}">
-
-                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigLocalBtnLabel}"></button>
-                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
-                </form>
+      th:fragment="modal">
+<div class="modal fade" id="pleaseWaitModal" tabindex="-1" role="dialog"
+     data-backdrop="static" data-keyboard="false"
+     aria-labelledby="pleaseWaitModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pleaseWaitModalTitle">Loading....</h5>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
     </div>
-</main>
-</body>
+</div>
 </html>
-
-<!--todo:apply setup logic for filling in dropdowns. Will also need file chooser blocks for both configs
-<ul class="navbar-nav flex-fill justify-content-end pr-4 align-items-end">
-   <li class="nav-item">
-       <div class="dropdown">
-           <button type="button" class="btn btn-outline-light dropdown-toggle"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class="fas fa-fw fa-globe"></i>
-               <th:block th:text="#{WorkflowModeLabel}"/>
-           </button>
-           <div class="dropdown-menu dropdown-menu-right">
-               <button type="button" class="dropdown-item"
-                       th:each="<WorkflowListName> : ${ {'en-US', 'es-ES'} }"
-                       th:onclick="changeLocale(${localeTag})"
-                       th:classappend="${#locale.toLanguageTag().equals(localeTag)}? 'active'"
-                       th:text="#{}">
-               </button>
-           </div>
-       </div>
-   </li>
-/ul>
--->
