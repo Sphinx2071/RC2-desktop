@@ -1,21 +1,41 @@
 package edu.uw.cse.ifrcdemo.setupfun.ui.reliefconfig;
 
 import edu.uw.cse.ifrcdemo.setupfun.ui.common.CloudEndpointAuthFormModel;
+import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.AuthorizationType;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.RegistrationMode;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
 
 public class ReliefConfigModel {
-    private String  regMode;
+
+    private AuthorizationType authorizationType;
+    private RegistrationMode  regMode;
     private String  beneficiaryEntityFormChooser;
     private String  beneficiaryEntityIdColumnTextField;
     private String  individualFormChooser;
+    private List<AuthorizationType> authorizationTypeList;
+    private List<RegistrationMode> registrationModeList;
 
-    public String getRegMode() {
+    public ReliefConfigModel() {
+
+    }
+
+    public AuthorizationType getAuthorizationType() {
+        return authorizationType;
+    }
+
+    public void setAuthorizationType(AuthorizationType authorizationType) {
+        this.authorizationType = authorizationType;
+    }
+
+    public RegistrationMode getRegMode() {
         return regMode;
     }
 
-    public void setRegMode(String regMode) {
+    public void setRegMode(RegistrationMode regMode) {
         this.regMode = regMode;
     }
 
@@ -43,13 +63,32 @@ public class ReliefConfigModel {
         this.individualFormChooser = individualFormChooser;
     }
 
+    public List<AuthorizationType> getAuthorizationTypeList() {
+        return authorizationTypeList;
+    }
+
+    public void setAuthorizationTypeList(List<AuthorizationType> authorizationTypeList) {
+        this.authorizationTypeList = authorizationTypeList;
+    }
+
+    public List<RegistrationMode> getRegistrationModeList() {
+        return registrationModeList;
+    }
+
+    public void setRegistrationModeList(List<RegistrationMode> registrationModeList) {
+        this.registrationModeList = registrationModeList;
+    }
+
     @Override
     public String toString() {
         return "ReliefConfigModel{" +
-                "regMode='" + regMode + '\'' +
+                "authorizationType='" + authorizationType + '\'' +
+                ", regMode='" + regMode + '\'' +
                 ", beneficiaryEntityFormChooser='" + beneficiaryEntityFormChooser + '\'' +
                 ", beneficiaryEntityIdColumnTextField='" + beneficiaryEntityIdColumnTextField + '\'' +
                 ", individualFormChooser='" + individualFormChooser + '\'' +
+                ", authorizationTypeList=" + authorizationTypeList +
+                ", registrationModeList=" + registrationModeList +
                 '}';
     }
 }

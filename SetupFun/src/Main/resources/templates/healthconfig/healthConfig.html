@@ -19,15 +19,25 @@
 <main role="main" class="container">
     <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{HealthConfigSrvBtnLabel})}"/>
     <div>
-        <div class="card card-body">
-            <div class="row">
+        <div class="row">
                 <form method="post" class="col-12" th:object="${healthConfigModel}">
+                    <div class="form-group row">
+                        <label for="regMode" class="col-2 col-form-label"
+                               th:text="#{WorkflowModeLabel}"></label>
+                        <div class="col-10">
+                            <select class="form-control" id="regMode" th:field="*{registrationMode}">
+                                <option th:each="registrationMode : ${healthConfigModel.registrationModeList}"
+                                        th:value="${registrationMode}"
+                                        th:text="${registrationMode.toString()}">
+                                </option>
+                            </select>
+                        </div>
 
 
                     <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigLocalBtnLabel}"></button>
                     <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
+                    </div>
                 </form>
-            </div>
         </div>
     </div>
 </main>

@@ -143,6 +143,30 @@
         $(closest).popover('toggle');
       }
     }
+    document.addEventListener('DOMContentLoaded', function(){
+        const authTypeList = document.getElementById('authType');
+        const regModeList = document.getElementById('regMode');
+        const registrationModes = {
+            'ID_ONLY_REGISTRATION': ['INDIVIDUAL'],
+            'REQUIRED_REGISTRATION': ['INDIVIDUAL', 'HOUSEHOLD'],
+            'OPTIONAL_REGISTRATION': ['INDIVIDUAL', 'HOUSEHOLD'],
+            'NO_REGISTRATION': []
+        };
+
+        authTypeList.addEventListener('change', function (){
+            const selectedAuthType = authTypeList.value;
+            const modes = registrationModes[selectedAuthType] || [];
+
+            regModeList.innerHTML = '';
+
+            modes.forEach(function(mode){
+                const option = document.createElement('option');
+                option.value = mode;
+                option.text = mode;
+                regModeList.appendChild(option);
+            });
+        });
+    });
 </script>
 </body>
 </html>
