@@ -7,6 +7,7 @@ This is intended to be a collection of information gained throughout my first de
 
 ## Table of Contents
 - [Initial Setup](#topic-1)
+- [Importing PlanningSharedLib](#topic-2)
 - [Template](#template-link)
 
 ## Topics
@@ -30,7 +31,7 @@ This is intended to be a collection of information gained throughout my first de
 <details><summary>Q&A</summary>
 
 **Q:** Delete entire old file from my working branch?   
-**A:** My code must stand on it's own and also to conflict with code that previously existed. I can still refer to the deprecated code from the source or git.
+**A:** My code must stand on its own and also to conflict with code that previously existed. I can still refer to the deprecated code from the source or git.
 
 **Q:** DOMContentLoaded in javascript loads once the initial html document has been loaded but before stylesheets, images, and subframes, where does thymeleaf fit into this?
 **A:** Assuming thymleaf will be loaded as the 'initial html' document.  
@@ -65,6 +66,65 @@ This is intended to be a collection of information gained throughout my first de
 **************************************************************************************
 
 <details id="template-link">
+<summary>Importing PlanningSharedLib</summary>
+
+<div style="margin-left: 20px">
+<details><summary>Objectives</summary>
+
+- Import elements from PlanningSharedLib that provide setup functionality.
+- mainMenu working
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Observations</summary>
+
+- moved all backend directories to 'setup>gointosharedlib' in order to use the existing code while not importing planningsharedlib.
+- copied entire static folder from planningsharedlib. 
+- fragments are mostly dublicates between ReliefPlanning and HealthPlanning.  They will need to be modified to remove 'profile', sidebar, possibly more but will mostly be duplicated again here in setup.
+- pom.xml file will need to be addressed next so that we can contact the server.
+- At this point I still have not added a single line of code, I've only taken out snippets or renamed variables. 
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Q&A</summary>
+
+**Q:** Is placing the 'borrowed' code from planningsharedlib into a temp dir like 'gointosharedlib' a good way to handle this? 
+
+**A:** 
+
+**Q:** We have maven, spring, spring boot, java, html/css/js, and thymeleaf.  Is that how I should describe the tech stack at this point?
+
+**A:**
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Lessons</summary>
+
+- Import statements! By knowing what other portions of code a class interacts with gives lots of hints at to what it's doing.
+- Intellij auto-populating my POM was somewhat successfullish. It seems like it was similar to SetupFun in a lot of ways. 
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Sources</summary>
+
+- RC2-desktop>PlanningSharedLib
+- RC2-desktop>ReliefPlanning
+
+</details>
+</div>
+
+</details>
+
+**************************************************************************************
+
+<details id="template-link">
 <summary>Template</summary>
 
 <div style="margin-left: 20px">
@@ -90,6 +150,22 @@ This is intended to be a collection of information gained throughout my first de
 
 - Source 1
 - Source 2
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Observations</summary>
+
+-
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Objectives</summary>
+
+-
 
 </details>
 </div>
