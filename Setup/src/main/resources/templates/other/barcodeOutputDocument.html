@@ -13,26 +13,15 @@
   -->
 
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::page}, #{SetupAppName})}">
-<th:block th:fragment="page">
-    <main role="main" class="container">
-        <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" th:href="@{/css/barcodeStyle.css}"/>
+    <link rel="stylesheet" th:href="@{/css/barcodePdfStyle.css}"/>
+</head>
 
-        <div th:replace="~{fragments/menu :: item(
-        @{/reliefconfig}, #{ConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-        <div th:replace="~{fragments/menu :: item(
-        @{/healthconfig}, #{HealthConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-        <div th:replace="~{fragments/menu :: item(
-        @{/other/barcodes}, #{GenBarcodeBtnLabel}, @{/img/create_barcodes_icon.svg}, #{GenBarcodeBtnLabel}, false)}"></div>
-
-        <div th:replace="~{fragments/menu :: item(
-        @{/serverlogin}, #{ResertSrvBtnLabel}, @{/img/other_options_icon.svg}, #{PermanentlyDeleteServerWarning}, false)}"></div>
-        <!--todo: figure out last argument for my implementation.
-        Old implementation(${disableButtons || isNoRegMode}) replaced with hardcoded boolean values above.-->
-    </main>
-</th:block>
+<body>
+<div th:insert="~{other/barcodeOutputCommon :: commonBarcodeOutput}"></div>
+</body>
 </html>

@@ -144,6 +144,7 @@ This is intended to be a collection of information gained throughout my first de
 <details><summary>Q&A</summary>
 
 **Q:** diff: mvn Clean + mvn install, rightclick(project) > maven > reload project?
+**A:** mvnClean -> m2 cache(mavens cache source pom) reload project --> intellij's cache(currUsed pom), 
 
 </details>
 </div>
@@ -175,11 +176,25 @@ This is intended to be a collection of information gained throughout my first de
 </div>
 
 <div style="margin-left: 20px">
+<details><summary>Observations</summary>
+
+- By targeting /other/barcode endpoint in planningSharedLib otherController I can avoid the otherItemsMenu functionality not needed for setup, while still using pre-existing barcode generator logic.
+- I needed to comment out planningSharedLib--> ui>other> in order for intellij to create the same objects from setup--> ui>other.  Why couldn't I select the reference I wanted? (intellij would see an autocomplete entry for setup but always default to planningSharedLib)
+- Commented out js for authType and regMode, will add back correctly as next step. 
+- implementation of barcode generator and config interface should be seperated.  
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
 <details><summary>Q&A</summary>
 
 **Q:** Relief/Health Config ? parent->children : singleClass with module property?
+**A:** Interface
 **Q:** Currently set to implement barcode generator from planninghSharedLib -> any issues? still have setupfuns working barcode.
+**A:** commented out issues! see observations.
 **Q:** problem I'm trying to solve is that my reliefConfigController from setupFun was building a list, however I am unable to iterate through this list or perform the needed validation on the members of that list.  I tried inserting thymeleaf expressions and directly referencing the enums from shared lib which was also unsuccessful.
+**A:** view must use strings, back end uses enums. this question is left to demonstrate how wrong that attempt was. 
 
 </details>
 </div>
@@ -187,6 +202,39 @@ This is intended to be a collection of information gained throughout my first de
 </details>
 
 **************************************************************************************
+
+<details id="topic-4">
+<summary>barcode and config</summary>
+
+<div style="margin-left: 20px">
+<details><summary>Objectives</summary>
+
+- Implement config interface.
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Observations</summary>
+
+- 
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Q&A</summary>
+
+**Q:** 
+
+</details>
+</div>
+
+</details>
+
+**************************************************************************************
+
+
 
 
 <script>
