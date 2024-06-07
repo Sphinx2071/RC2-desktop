@@ -144,7 +144,7 @@
         }
     }
 
-    /*document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
         const authTypeList = document.getElementById('authType');
         const regModeList = document.getElementById('regMode');
         const registrationModes = {
@@ -154,20 +154,20 @@
             'NO_REGISTRATION': []
         };
 
-        authTypeList.addEventListener('change', function (){
+        authTypeList.addEventListener('change', function () {
             const selectedAuthType = authTypeList.value;
             const modes = registrationModes[selectedAuthType] || [];
 
             regModeList.innerHTML = '';
 
-            modes.forEach(function(mode){
+            modes.forEach(function (mode) {
                 const option = document.createElement('option');
                 option.value = mode;
                 option.text = mode;
                 regModeList.appendChild(option);
             });
-        });*/
-
+        });
+    })
 </script>
 </body>
 </html>

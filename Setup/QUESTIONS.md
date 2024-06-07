@@ -217,7 +217,8 @@ This is intended to be a collection of information gained throughout my first de
 <div style="margin-left: 20px">
 <details><summary>Observations</summary>
 
-- 
+- While the classes look like an inheritance situation the solution may be more complex than not.
+- I feel that this structure is important, Instead of implementing the interface I've gotten reliefConfig working on it's own and will try and nail down how to organize this as I add health as the addition of healthConfig is what brings up the question of inheritance. 
 
 </details>
 </div>
@@ -225,7 +226,7 @@ This is intended to be a collection of information gained throughout my first de
 <div style="margin-left: 20px">
 <details><summary>Q&A</summary>
 
-**Q:** 
+**Q:** Interface - required functionality  Class-inheritance - shared functionality/members.  Either way controller only has access to the parent. Do I need to abstract out controllers as well, interface for controllers and class-inheritance for models.  Is that overbuilding this code? 
 
 </details>
 </div>
