@@ -15,16 +15,13 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::page}, #{SetupAppName})}">
+      th:replace="~{fragments/layout :: layout (~{::page}, #{ServerSettings})}">
 <th:block th:fragment="page">
     <main role="main" class="container">
         <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
 
         <div th:replace="~{fragments/menu :: item(
-        @{/reliefconfig}, #{ConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
-
-        <div th:replace="~{fragments/menu :: item(
-        @{/healthconfig}, #{HealthConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
+        @{/serverconfig}, #{ServerTxt}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
 
         <div th:replace="~{fragments/menu :: item(
         @{/other/barcodes}, #{GenBarcodeBtnLabel}, @{/img/create_barcodes_icon.svg}, #{GenBarcodeBtnLabel}, false)}"></div>

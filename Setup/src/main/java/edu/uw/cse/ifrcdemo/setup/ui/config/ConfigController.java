@@ -1,12 +1,14 @@
 package edu.uw.cse.ifrcdemo.setup.ui.config;
 
-import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.AuthorizationType;
-import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.RegistrationMode;
-import edu.uw.cse.ifrcdemo.setup.ui.config.ReliefConfig;
+import edu.uw.cse.ifrcdemo.setup.model.config.ConfigDto;
+import edu.uw.cse.ifrcdemo.setup.model.config.Configurable;
+import edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig;
+import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
 import org.apache.logging.log4j.Logger;
+import org.apache.tools.ant.types.selectors.SelectSelector;
 import org.apache.wink.json4j.JSONException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -19,13 +21,14 @@ import java.util.*;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
-@Controller
-@RequestMapping("/reliefconfig")
-@SessionAttributes(types = { ReliefConfig.class })
-public class ConfigController {
-    private static final String SERVER_LOGIN = "login/serverlogin";
-    private static final String MAIN_MENU_TEMPLATE = "mainmenu/mainMenu";
+import static edu.uw.cse.ifrcdemo.setup.model.config.ConfigFactory.createConfig;
 
+@Controller
+@RequestMapping("/serverconfig")
+@SessionAttributes(types = { ConfigDto.class })
+public class ConfigController {
+    private static final String SERVER_CONFIG = "serverconfig/serverConfig";
+    private static final String MAIN_MENU_TEMPLATE = "mainmenu/mainMenu";
     private static final String RELIEF_CONFIG = "reliefconfig/reliefConfig";
 
     private final Logger logger;
@@ -37,22 +40,43 @@ public class ConfigController {
     }
 
     @Valid
-    @ModelAttribute("ReliefConfig")
-    public ReliefConfig newReliefConfig() {
-        return new ReliefConfig();
-    }
+    @ModelAttribute("ConfigDto")
+    public ConfigDto newConfig(){return new ConfigDto();}
 
     @GetMapping("")
-    public ModelAndView reliefServerConfig(
-            @Valid @ModelAttribute("ReliefConfig") ReliefConfig reliefConfig,
-            BindingResult bindingResult, SessionStatus status) throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException {
+    public ModelAndView selectModule(
+            @Valid @ModelAttribute("ConfigDto") ConfigDto configDto, BindingResult bindingResult, SessionStatus sessionStatus)
+            throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException {
 
-        ModelAndView reliefModelAndView = new ModelAndView(RELIEF_CONFIG);
+        ModelAndView configDtoModelAndView = new ModelAndView(SERVER_CONFIG);
 
-        reliefConfig.setAuthorizationTypeList(Arrays.asList(AuthorizationType.values()));
-        reliefConfig.setRegistrationModeList(Arrays.asList(RegistrationMode.values()))   ;
+        configDto.setModuleList(Arrays.asList(Module.values()));
 
-        reliefModelAndView.addObject("reliefConfig", reliefConfig);
-        return reliefModelAndView;
+        configDtoModelAndView.addObject("configDto", configDto);
+
+        return configDtoModelAndView;
+    }
+
+    @PostMapping("processModule")
+    public ModelAndView processModule(
+            @Valid @ModelAttribute("ConfigDto") ConfigDto configDto, BindingResult bindingResult) {
+
+        if (configDto.getModule().equals(Module.RELIEF)) {
+            Configurable config = createConfig(configDto);
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("config", config);
+            modelAndView.setViewName("redirect:/reliefconfig/reliefConfig");
+            return modelAndView;
+        } else if (configDto.getModule().equals(Module.HEALTH)){
+            Configurable config = createConfig(configDto);
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("config", config);
+            modelAndView.setViewName("redirect:/healthconfig/healthConfig");
+            return modelAndView;
+        }else {
+            throw new IllegalArgumentException("Invalid Module");
+        }
     }
 }

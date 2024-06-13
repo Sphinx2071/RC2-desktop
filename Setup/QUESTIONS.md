@@ -10,6 +10,7 @@ This is intended to be a collection of information gained throughout my first de
 - [Importing PlanningSharedLib](#topic-2)
 - [pom.xml](#topic-3)
 - [barcode and config](#topic-4)
+- [file selection](#topic-5)
 
 ## Topics
 
@@ -220,6 +221,10 @@ This is intended to be a collection of information gained throughout my first de
 - While the classes look like an inheritance situation the solution may be more complex than not.
 - I feel that this structure is important, Instead of implementing the interface I've gotten reliefConfig working on it's own and will try and nail down how to organize this as I add health as the addition of healthConfig is what brings up the question of inheritance. 
 
+- used class inheritance. 
+- used static factory method that utilizes a DataTransferObject to make the correct form(relief/health).
+ 
+
 </details>
 </div>
 
@@ -227,6 +232,47 @@ This is intended to be a collection of information gained throughout my first de
 <details><summary>Q&A</summary>
 
 **Q:** Interface - required functionality  Class-inheritance - shared functionality/members.  Either way controller only has access to the parent. Do I need to abstract out controllers as well, interface for controllers and class-inheritance for models.  Is that overbuilding this code? 
+**A:** springframework.modelandview has a redirect feature that should make adding additional 'modules' easier(was easier than abstracting controllers)
+
+**Q:** file structure inside setup.model
+
+**Q:** how to put my own javascript on reliefConfig.html...I'm going to rewrite the layout fragment next and make a setupLayout fragment i guess?
+
+**Q:** reflection? (relief > model.rctemplate.RcDistributionTemplate using JSON)
+
+**Q:** I was worried about ToString so I overrode with an abstract method to force children to write one, but I'm also thinking the default behavior
+
+</details>
+</div>
+
+</details>
+
+**************************************************************************************
+
+<details id="topic-5">
+<summary>file selection</summary>
+
+<div style="margin-left: 20px">
+<details><summary>Objectives</summary>
+
+- Implement file choosers.
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Observations</summary>
+
+- 
+
+
+</details>
+</div>
+
+<div style="margin-left: 20px">
+<details><summary>Q&A</summary>
+
+**Q:** 
 
 </details>
 </div>
