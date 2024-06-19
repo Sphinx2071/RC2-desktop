@@ -180,9 +180,8 @@ This is intended to be a collection of information gained throughout my first de
 <details><summary>Observations</summary>
 
 - By targeting /other/barcode endpoint in planningSharedLib otherController I can avoid the otherItemsMenu functionality not needed for setup, while still using pre-existing barcode generator logic.
-- I needed to comment out planningSharedLib--> ui>other> in order for intellij to create the same objects from setup--> ui>other.  Why couldn't I select the reference I wanted? (intellij would see an autocomplete entry for setup but always default to planningSharedLib)
-- Commented out js for authType and regMode, will add back correctly as next step. 
-- implementation of barcode generator and config interface should be seperated.  
+- I needed to comment out planningSharedLib--> ui>other> in order for intellij to create the same objects from setup--> ui>other.  Why couldn't I select the reference I wanted? (intellij would see an autocomplete entry for setup but always default to planningSharedLib) 
+- implementation of barcode generator and config interface should be seperated. *followup* as should all functionality it's kinda the point of OOP.
 
 </details>
 </div>
@@ -263,7 +262,12 @@ This is intended to be a collection of information gained throughout my first de
 <div style="margin-left: 20px">
 <details><summary>Observations</summary>
 
-- 
+- ConfigDto, while functional, is not the best design pattern.  Data Transfer object is more for transferring data between processes.
+- static factory method goes inside class it creates.  Factory design pattern uses stand alone factory class...these are not the same(this implementation is wrong).(Effective Java2.1)
+- Abstract parent class may be useful here, however that is for shared fields and methods(favor code reuse over copying), and furthermore that implementation detail should be hidden from the user.  
+- Interface enforces a contract.  The contract here is that the user must select an appropriate module in order for me to create the correct html form.
+- Each 'form' must have it's own controller. That controller can control any number of html pages in order to 'fill out' the form.
+- Each html page can only have a single controller, it can only ask for instruction from one place.  
 
 
 </details>

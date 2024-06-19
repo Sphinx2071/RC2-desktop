@@ -2,13 +2,10 @@ package edu.uw.cse.ifrcdemo.setup.ui.config;
 
 import edu.uw.cse.ifrcdemo.setup.model.config.ConfigDto;
 import edu.uw.cse.ifrcdemo.setup.model.config.Configurable;
-import edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
 import org.apache.logging.log4j.Logger;
-import org.apache.tools.ant.types.selectors.SelectSelector;
 import org.apache.wink.json4j.JSONException;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -28,8 +25,8 @@ import static edu.uw.cse.ifrcdemo.setup.model.config.ConfigFactory.createConfig;
 @SessionAttributes(types = { ConfigDto.class })
 public class ConfigController {
     private static final String SERVER_CONFIG = "serverconfig/serverConfig";
-    private static final String MAIN_MENU_TEMPLATE = "mainmenu/mainMenu";
     private static final String RELIEF_CONFIG = "reliefconfig/reliefConfig";
+    private static final String HEALTH_CONFIG = "healthconfig/healthConfig";
 
     private final Logger logger;
     private final TemplateEngine templateEngine;
@@ -42,6 +39,7 @@ public class ConfigController {
     @Valid
     @ModelAttribute("ConfigDto")
     public ConfigDto newConfig(){return new ConfigDto();}
+
 
     @GetMapping("")
     public ModelAndView selectModule(
@@ -66,14 +64,14 @@ public class ConfigController {
 
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("config", config);
-            modelAndView.setViewName("redirect:/reliefconfig/reliefConfig");
+            modelAndView.setViewName("redirect:/" + RELIEF_CONFIG);
             return modelAndView;
         } else if (configDto.getModule().equals(Module.HEALTH)){
             Configurable config = createConfig(configDto);
 
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("config", config);
-            modelAndView.setViewName("redirect:/healthconfig/healthConfig");
+            modelAndView.setViewName("redirect:/" + HEALTH_CONFIG);
             return modelAndView;
         }else {
             throw new IllegalArgumentException("Invalid Module");

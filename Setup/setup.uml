@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.uw.cse.ifrcdemo.setup</OriginalElement>
+  <nodes>
+    <node x="-90.0" y="-15.0">edu.uw.cse.ifrcdemo.setup.ui.health.HealthController</node>
+    <node x="417.0" y="199.5">edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig</node>
+    <node x="816.0" y="-15.0">edu.uw.cse.ifrcdemo.setup.model.config.Configurable</node>
+    <node x="11.5" y="184.0">edu.uw.cse.ifrcdemo.setup.model.config.ConfigFactory</node>
+    <node x="668.0" y="506.0">edu.uw.cse.ifrcdemo.setup.ui.mainmenu.MainMenuController</node>
+    <node x="-90.0" y="506.0">edu.uw.cse.ifrcdemo.setup.ui.config.ConfigController</node>
+    <node x="387.0" y="528.0">edu.uw.cse.ifrcdemo.setup.model.config.ConfigDto</node>
+    <node x="-85.0" y="293.0">edu.uw.cse.ifrcdemo.setup.ui.relief.ReliefController</node>
+    <node x="523.5" y="101.5">edu.uw.cse.ifrcdemo.setup.model.health.HealthConfig</node>
+    <node x="939.0" y="506.0">edu.uw.cse.ifrcdemo.setup.SetupApplication</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.uw.cse.ifrcdemo.setup.model.config.ConfigFactory" target="edu.uw.cse.ifrcdemo.setup.model.health.HealthConfig" relationship="CREATE">
+      <point x="127.0" y="-0.0" />
+      <point x="387.0" y="223.0" />
+      <point x="387.0" y="140.5" />
+      <point x="-68.0" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.ui.relief.ReliefController" target="edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig" relationship="CREATE">
+      <point x="223.5" y="-0.0" />
+      <point x="387.0" y="377.0" />
+      <point x="387.0" y="305.5" />
+      <point x="-174.5" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.ui.health.HealthController" target="edu.uw.cse.ifrcdemo.setup.model.health.HealthConfig" relationship="CREATE">
+      <point x="228.5" y="-0.0" />
+      <point x="397.0" y="69.0" />
+      <point x="397.0" y="140.5" />
+      <point x="-68.0" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.model.config.ConfigFactory" target="edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig" relationship="CREATE">
+      <point x="127.0" y="-0.0" />
+      <point x="397.0" y="223.0" />
+      <point x="397.0" y="305.5" />
+      <point x="-174.5" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.model.relief.ReliefConfig" target="edu.uw.cse.ifrcdemo.setup.model.config.Configurable" relationship="GENERALIZATION">
+      <point x="174.5" y="-0.0" />
+      <point x="791.0" y="305.5" />
+      <point x="791.0" y="223.0" />
+      <point x="-172.0" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.model.health.HealthConfig" target="edu.uw.cse.ifrcdemo.setup.model.config.Configurable" relationship="GENERALIZATION">
+      <point x="68.0" y="-0.0" />
+      <point x="791.0" y="140.5" />
+      <point x="791.0" y="223.0" />
+      <point x="-172.0" y="-0.0" />
+    </edge>
+    <edge source="edu.uw.cse.ifrcdemo.setup.ui.config.ConfigController" target="edu.uw.cse.ifrcdemo.setup.model.config.ConfigDto" relationship="CREATE">
+      <point x="213.5" y="-0.0" />
+      <point x="-118.0" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7058214747736093" showDependencies="true" x="534.0056818181818" y="349.8695931085044" />
+  <SelectedNodes>
+    <node>edu.uw.cse.ifrcdemo.setup.ui.config.ConfigController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
