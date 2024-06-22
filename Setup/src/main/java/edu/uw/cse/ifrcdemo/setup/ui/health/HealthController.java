@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
-import static edu.uw.cse.ifrcdemo.setup.model.healthConfig.HealthConfig.createHealthConfig;
+import static edu.uw.cse.ifrcdemo.setup.model.healthConfig.HealthConfig.createConfig;
 
 @Controller
 @RequestMapping("/healthconfig")
@@ -39,7 +39,7 @@ public class HealthController {
     @Valid
     @ModelAttribute("HealthConfig")
     public HealthConfig newHealthConfig(){
-        return createHealthConfig();
+        return createConfig();
     }
 
     @GetMapping
