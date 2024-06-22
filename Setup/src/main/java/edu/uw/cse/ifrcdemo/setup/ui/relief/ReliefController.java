@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
-import static edu.uw.cse.ifrcdemo.setup.model.reliefConfig.ReliefConfig.createReliefConfig;
+import static edu.uw.cse.ifrcdemo.setup.model.reliefConfig.ReliefConfig.createConfig;
 
 @Controller
 @RequestMapping("/reliefconfig")
@@ -40,7 +40,7 @@ public class ReliefController {
     @Valid
     @ModelAttribute("ReliefConfig")
     public ReliefConfig newReliefConfig(){
-       return createReliefConfig();
+       return createConfig();
     }
 
     @GetMapping
