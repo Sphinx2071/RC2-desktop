@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::generatedBarcodes}, #{BarcodeGeneratorTitle})}">
+      th:replace="~{fragments/setupLayout :: layout (~{::generatedBarcodes}, #{BarcodeGeneratorTitle})}">
 
 <th:block th:fragment="generatedBarcodes">
     <main role="main" class="container">

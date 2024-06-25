@@ -25,7 +25,6 @@
     <script defer th:src="@{/fontawesome-free-5.7.2-web/js/all.min.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <link th:if="${title.startsWith('Reports')}" rel="stylesheet" th:href="@{/css/reportStyle.css}"/>
     <link th:if="${title.startsWith('Barcode Generator')}" rel="stylesheet"
           th:href="@{/css/barcodeStyle.css}"/>
 
@@ -91,11 +90,6 @@
 <script>
     'use strict';
 
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
 
     async function changeLocale(newLocale) {
         await fetch(`?locale=${newLocale}`, {
@@ -119,7 +113,7 @@
     window.addEventListener('load', evt => {
         setTimeout(() => {
             if (!window['javafx']) {
-                throw new Error('javafx not found');
+                throw new Error('javafx not found!');
             }
         }, 500);
 
@@ -127,11 +121,6 @@
             container: 'body',
             trigger: 'manual'
         });
-    });
-
-    window.addEventListener('javafxReady', evt => {
-        let profileName = window.javafx.getProfileName();
-        document.getElementById('profile_name').innerText = profileName;
     });
 
     function handleTooltipClick(evt) {
@@ -185,16 +174,5 @@
       th:replace="~{::headerLayout(${template}, ${title}, _,  'false', 'false')}">
 </html>
 
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:fragment="reportLayout (template, title)"
-      th:replace="~{::headerLayout(${template}, ${title}, ~{::link},  'true', 'true')}">
 
-<link rel="stylesheet" th:href="@{/css/reportStyle.css}"/>
-</html>
 
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      th:fragment="createDistNVisitLayout (template, title)"
-      th:replace="~{::headerLayout(${template}, ${title}, _,  'true', 'false')}">
-</html>
