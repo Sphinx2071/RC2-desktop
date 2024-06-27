@@ -134,28 +134,33 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const authTypeList = document.getElementById('authType');
-        const regModeList = document.getElementById('regMode');
+        const authType = document.getElementById('authType');
+        const regMode = document.getElementById('regMode');
         const registrationModes = {
             'ID_ONLY_REGISTRATION': ['INDIVIDUAL'],
             'REQUIRED_REGISTRATION': ['INDIVIDUAL', 'HOUSEHOLD'],
             'OPTIONAL_REGISTRATION': ['INDIVIDUAL', 'HOUSEHOLD'],
             'NO_REGISTRATION': []
         };
-
-        authTypeList.addEventListener('change', function () {
-            const selectedAuthType = authTypeList.value;
+        authType.addEventListener('change', function () {
+            const selectedAuthType = authType.value;
             const modes = registrationModes[selectedAuthType] || [];
 
-            regModeList.innerHTML = '';
+            regMode.innerHTML = '';
 
             modes.forEach(function (mode) {
                 const option = document.createElement('option');
                 option.value = mode;
                 option.text = mode;
-                regModeList.appendChild(option);
+                regMode.appendChild(option);
             });
         });
+        /*document.getElementById('regMode').value = selectedAuthType.value !== 'NO_REGISTRATION';
+        regMode.addEventListener('change', function (){
+            const selectedRegMode = document.getElementById("regMode");
+            const isDisabled = selectedRegMode.value ==='HOUSEHOLD';
+            document.getElementById("isDisabled").value = isDisabled;
+        })*/
     })
 
 </script>
