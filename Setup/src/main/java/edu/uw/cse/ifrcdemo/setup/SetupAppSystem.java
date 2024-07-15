@@ -19,7 +19,7 @@ import edu.uw.cse.ifrcdemo.setup.gointosharedlib.util.InternalFileStoreUtil;
 
 public class SetupAppSystem extends BaseAppSystem {
 
-    public static final String START_URL = "http://localhost:8090/login";
+    public static final String START_URL = "http://localhost:8090/mainmenu";
     public static final String APP_TITLE = "RC2 Setup Tool";
     public static final String SETUP_MODULE_NAME = "Setup";
 
