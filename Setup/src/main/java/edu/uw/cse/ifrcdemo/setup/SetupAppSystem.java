@@ -12,20 +12,25 @@
  *
  */
 
-package edu.uw.cse.ifrcdemo.setup.gointosharedlib.localization;
+package edu.uw.cse.ifrcdemo.setup;
 
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import edu.uw.cse.ifrcdemo.setup.gointosharedlib.BaseAppSystem;
+import edu.uw.cse.ifrcdemo.setup.gointosharedlib.util.InternalFileStoreUtil;
 
-@Configuration
-public class MessageSourceValidatorConfiguration {
-  @Bean
-  public LocalValidatorFactoryBean localValidatorFactoryBean(MessageSource messageSource) {
-    LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-    localValidatorFactoryBean.setValidationMessageSource(messageSource);
+public class SetupAppSystem extends BaseAppSystem {
 
-    return localValidatorFactoryBean;
-  }
+    public static final String START_URL = "http://localhost:8090/login";
+    public static final String APP_TITLE = "RC2 Setup Tool";
+    public static final String SETUP_MODULE_NAME = "Setup";
+
+    public static synchronized void systemInit() {
+        //todo: what init tests do we need in setup?
+        /*if(systemInit)
+            return;
+        InternalFileStoreUtil.configFileStoreUtil(SETUP_MODULE_NAME, new SetupSharedDataInstance());*/
+        systemInit=true;
+    }
+
+
+
 }

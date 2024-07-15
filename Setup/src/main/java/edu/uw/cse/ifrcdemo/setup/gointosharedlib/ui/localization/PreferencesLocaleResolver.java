@@ -12,7 +12,7 @@
  *
  */
 
-package edu.uw.cse.ifrcdemo.setup.gointosharedlib.localization;
+package edu.uw.cse.ifrcdemo.setup.gointosharedlib.ui.localization;
 
 import edu.uw.cse.ifrcdemo.translations.TranslationUtil;
 import org.apache.logging.log4j.Logger;
