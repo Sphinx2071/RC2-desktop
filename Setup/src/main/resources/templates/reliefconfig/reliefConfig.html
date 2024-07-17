@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="authType" th:text="#{WorkflowModeLabel}"></label>
                 <div class="col-10">
-                    <select class="form-control" id="authType" th:field="*{authorizationType}">
+                    <select class="form-control" id="authType" name="authorizationType" th:field="*{authorizationType}" onchange="this.form.submit()">
                         <option th:each="authorizationType : ${reliefConfig.authorizationTypeList}"
                                 th:value="${authorizationType}"
                                 th:text="${authorizationType.toString()}">
@@ -32,23 +32,26 @@
                 </div>
                 <label for="regMode" th:text="#{RegistrationType}"></label>
                 <div class="col-10">
-                    <select class="form-control" id="regMode" th:field="*{registrationModeList}">
-                        <!-- dynamicically populated, script in layout fragment -->
+                    <select class="form-control" id="regMode" name="registrationMode" th:field="*{registrationModeList}" th:disabled="true">
+                        <option th:each="registrationMode : ${reliefConfig.registrationModeList}"
+                                th:value="${registrationMode}"
+                                th:text="${registrationMode.toString()}">
+                        </option>
                     </select>
                 </div>
                 <label for="beneficiaryEntityFormChooser" th:text="#{BeneficiaryEntityFormLabel}"></label>
                 <div class="col-10 col" >
-                    <input type="file" class="form-control" id="beneficiaryEntityFormChooser"
+                    <input type="file" class="form-control" id="beneficiaryEntityFormChooser" th:disabled="true"
                            th:field="*{beneficiaryEntityFormChooser}">
                 </div>
                 <label for="beneficiaryEntityIdColumnTextField" th:text="#{AddBeneficiaryId}"></label>
                 <div class="col-10">
-                    <input type="text" class="form-control" id="beneficiaryEntityIdColumnTextField"
+                    <input type="text" class="form-control" id="beneficiaryEntityIdColumnTextField" th:disabled="true"
                            th:field="*{beneficiaryEntityIdColumnTextField}">
                 </div>
                 <label for="individualFormChooser" th:text="#{MemberFormLabel}"></label>
                 <div class="col-10">
-                    <input type="file" class="form-control" id="individualFormChooser"
+                    <input type="file" class="form-control" id="individualFormChooser" th:disabled="true"
                            th:field="*{individualFormChooser}">
                 </div>
             </div>

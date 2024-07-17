@@ -7,10 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wink.json4j.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
@@ -18,7 +15,10 @@ import org.thymeleaf.TemplateEngine;
 import javax.validation.Valid;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
@@ -51,9 +51,30 @@ public class ReliefController {
         ModelAndView reliefModelAndView = new ModelAndView(RELIEF_CONFIG);
 
         reliefConfig.setAuthorizationTypeList(Arrays.asList(AuthorizationType.values()));
-        reliefConfig.setRegistrationModeList(Arrays.asList(RegistrationMode.values()));
+        reliefConfig.setRegistrationModeList(new ArrayList<>());
 
         reliefModelAndView.addObject("reliefConfig", reliefConfig);
         return reliefModelAndView;
+    }
+
+    @PostMapping
+    public ModelAndView updateForm(@ModelAttribute("reliefConfig") ReliefConfig reliefConfig){
+        reliefConfig.setRegistrationModeList(getRegistrationModes(reliefConfig.getAuthorizationType()));
+
+        ModelAndView modelAndView = new ModelAndView(RELIEF_CONFIG);
+        modelAndView.addObject("reliefConfig", reliefConfig);
+        return modelAndView;
+    }
+    private List<RegistrationMode> getRegistrationModes(AuthorizationType authType){
+        switch(authType){
+            case ID_ONLY_REGISTRATION:
+                return Collections.singletonList(RegistrationMode.INDIVIDUAL);
+            case REQUIRED_REGISTRATION:
+            case OPTIONAL_REGISTRATION:
+                return Arrays.asList(RegistrationMode.INDIVIDUAL, RegistrationMode.HOUSEHOLD);
+            case NO_REGISTRATION:
+            default:
+                return Collections.emptyList();
+        }
     }
 }

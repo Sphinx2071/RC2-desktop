@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2016-2022 University of Washington
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ *
+ *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
 package edu.uw.cse.ifrcdemo.setup;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,151 +61,151 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-//todo: remove, old imports
-/*import edu.uw.cse.ifrcdemo.setup.gointosharedlib.localization.PreferencesLocaleResolver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.InjectionPoint;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.core.MethodParameter;
-import org.springframework.web.servlet.LocaleResolver;
-
-import java.lang.reflect.Field;*/
-
 @SpringBootApplication
 public class SetupApplication extends Application implements WebMvcConfigurer {
-    private static final Logger logger = LogManager.getLogger(SetupApplication.class);
-    private static ConfigurableApplicationContext ctx;
-    private static SharedWebInfrastructure swi;
-    private static ChangeListener<Worker.State> listener;
-    private static EventHandler<WindowEvent> closeHandler;
 
-    @Override
-    public void start(Stage stage) {
-        swi = new SharedWebInfrastructure(stage);
-        listener = new SetupChangeListener(swi);
-        closeHandler = new SetupCloseEventHandler();
+  private static final Logger logger = LogManager.getLogger(SetupApplication.class);
 
-        swi.addListenerToWebEngine(listener);
-        swi.setCloseHandler(closeHandler);
+  private static ConfigurableApplicationContext ctx;
+  private static SharedWebInfrastructure swi;
 
-        stage.setTitle(SetupAppSystem.APP_TITLE);
-        stage.getIcons().add(new Image("/static/img/IFRC_Logo.png"));
+  private static ChangeListener<Worker.State> listener;
+  private static EventHandler<WindowEvent> closeHandler;
 
-        swi.loadUrl(SetupAppSystem.START_URL);
-        stage.show();
-    }
+  @Override
+  public void start(Stage stage) {
+    swi = new SharedWebInfrastructure(stage);
+    listener = new SetupChangeListener(swi);
+    closeHandler = new SetupCloseEventHandler();
 
-    public static void main(String[] args) {
+    swi.addListenerToWebEngine(listener);
+    swi.setCloseHandler(closeHandler);
+
+    stage.setTitle(SetupAppSystem.APP_TITLE);
+    stage.getIcons().add(new Image("/static/img/IFRC_Logo.png"));
+
+    swi.loadUrl(SetupAppSystem.START_URL);
+    stage.show();
+  }
+
+  public static void main(String[] args) {
     SetupAppSystem.systemInit();
     SetupAppSystem.initAllConfigs();
     try {
-        ctx = new SpringApplicationBuilder(SetupApplication.class).headless(false)
-                .run(args);
+      ctx = new SpringApplicationBuilder(SetupApplication.class).headless(false)
+              .run(args);
 
-        launch(args);
+      launch(args);
     } catch (Exception throwable) {
-        logger.catching(throwable);
-        System.err.println("Sending to Sentry!!!");
-        Sentry.capture(throwable);
+      logger.catching(throwable);
+      System.err.println("Sending to Sentry!!!");
+      Sentry.capture(throwable);
     }
-}
+  }
 
-    // todo: remove, old main
-    /*public static void main(String[] args) {
-        SpringApplication.run(SetupApplication.class, args);
-    }*/
+  /*
+   * Bean needed for language change
+   */
+  @Bean
+  public LocaleResolver localeResolver(PreferencesLocaleResolver resolver) {
+    return resolver;
+  }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new LocaleChangeInterceptor());
+    registry.addInterceptor(new HandlerInterceptor() {
+      @Override
+      public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        if (ex != null) {
+          Sentry.capture(ex);
+        }
+      }
+    });
+  }
+
+  @Bean
+  @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+  public Logger logger(InjectionPoint injectionPoint) {
+    Class<?> loggingClass = SetupApplication.class;
+
+    MethodParameter methodParameter = injectionPoint.getMethodParameter();
+    if (methodParameter != null) {
+      // constructor injection
+      loggingClass = methodParameter.getContainingClass();
+    } else {
+      Field field = injectionPoint.getField();
+
+      if (field != null) {
+        // field injection
+        loggingClass = field.getDeclaringClass();
+      }
+    }
+
+    return LogManager.getLogger(loggingClass);
+  }
+
+  @Bean
+  public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    return objectMapper;
+  }
+
+  @Bean
+  @Scope(BeanDefinition.SCOPE_PROTOTYPE) // use prototype to prevent template caching
+  public MustacheFactory mustacheFactory(Logger logger) {
+    return new DefaultMustacheFactory(resourceName -> {
+      try {
+        return Files.newBufferedReader(Paths.get(resourceName), StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        logger.catching(Level.INFO, e);
+        return null;
+      }
+    });
+  }
+
+  private class SetupChangeListener implements ChangeListener<Worker.State> {
+    private final Scene scene;
+    private final WebEngine webEngine;
+
+    public SetupChangeListener(SharedWebInfrastructure swi) {
+      this.scene = swi.getScene();
+      this.webEngine = swi.getWebEngine();
+    }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LocaleChangeInterceptor());
-        registry.addInterceptor(new HandlerInterceptor() {
-            @Override
-            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-                if (ex != null) {
-                    Sentry.capture(ex);
-                }
-            }
-        });
+    public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
+                        Worker.State newValue) {
+      if (newValue == Worker.State.SUCCEEDED) {
+        JSObject window = (JSObject) webEngine.executeScript("window");
+        window.setMember("javafx", new SetupJsCallback(scene.getWindow(), webEngine));
+        webEngine.executeScript("window.dispatchEvent(new Event('javafxReady'))");
+      }
     }
+  }
 
-    @Bean
-    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public Logger logger(InjectionPoint injectionPoint) {
-        Class<?> loggingClass = SetupApplication.class;
-
-        MethodParameter methodParameter = injectionPoint.getMethodParameter();
-        if (methodParameter != null) {
-            // constructor injection
-            loggingClass = methodParameter.getContainingClass();
+  private class SetupCloseEventHandler implements EventHandler<WindowEvent> {
+    @Override
+    public void handle(WindowEvent event) {
+      try {
+        ResourceBundle translations = TranslationUtil.getTranslations();
+        ButtonType result =
+            FxDialogUtil.showConfirmDialogAndWait(
+                translations.getString(TranslationConsts.EXIT),
+                translations.getString(TranslationConsts.THE_APPLICATION_WILL_CLOSE),
+                translations.getString(TranslationConsts.ARE_YOU_SURE_YOU_WANT_TO_EXIT));
+        if (result == ButtonType.OK) {
+          logger.error("Close Request");
+          ctx.stop();
+          ctx.close();
+          stop();
         } else {
-            Field field = injectionPoint.getField();
-
-            if (field != null) {
-                // field injection
-                loggingClass = field.getDeclaringClass();
-            }
+          event.consume();
         }
-        return LogManager.getLogger(loggingClass);
+      } catch (Exception e) {
+        logger.catching(e);
+        Sentry.capture(e);
+      }
     }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper;
-    }
-
-    @Bean
-    public LocaleResolver localeResolver(PreferencesLocaleResolver resolver) {
-        return resolver;
-    }
-
-    private class SetupChangeListener implements ChangeListener<Worker.State> {
-        private final Scene scene;
-        private final WebEngine webEngine;
-
-        public SetupChangeListener(SharedWebInfrastructure swi) {
-            this.scene = swi.getScene();
-            this.webEngine = swi.getWebEngine();
-        }
-        /*todo: JSCallback is attempting to access a data repo in order call getCurrentProfile().....why do this? */
-        @Override
-        public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
-                            Worker.State newValue) {
-            if (newValue == Worker.State.SUCCEEDED) {
-                JSObject window = (JSObject) webEngine.executeScript("window");
-                window.setMember("javafx", new SetupJsCallback(scene.getWindow(), webEngine));
-                webEngine.executeScript("window.dispatchEvent(new Event('javafxReady'))");
-            }
-        }
-    }
-
-    private class SetupCloseEventHandler implements EventHandler<WindowEvent> {
-        @Override
-        public void handle(WindowEvent event) {
-            try {
-                ResourceBundle translations = TranslationUtil.getTranslations();
-                ButtonType result =
-                        FxDialogUtil.showConfirmDialogAndWait(
-                                translations.getString(TranslationConsts.EXIT),
-                                translations.getString(TranslationConsts.THE_APPLICATION_WILL_CLOSE),
-                                translations.getString(TranslationConsts.ARE_YOU_SURE_YOU_WANT_TO_EXIT));
-                if (result == ButtonType.OK) {
-                    logger.error("Close Request");
-                    ctx.stop();
-                    ctx.close();
-                    stop();
-                } else {
-                    event.consume();
-                }
-            } catch (Exception e) {
-                logger.catching(e);
-                Sentry.capture(e);
-            }
-        }
-    }
+  }
 }
