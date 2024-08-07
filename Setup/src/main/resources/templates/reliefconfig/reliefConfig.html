@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="authType" th:text="#{WorkflowModeLabel}"></label>
                 <div class="col-10">
-                    <select class="form-control" id="authType" name="authorizationType" th:field="*{authorizationType}" onchange="this.form.submit()">
+                    <select class="form-control" id="authType" name="authorizationType" th:field="*{authorizationType}">
                         <option th:each="authorizationType : ${reliefConfig.authorizationTypeList}"
                                 th:value="${authorizationType}"
                                 th:text="${authorizationType.toString()}">
@@ -32,7 +32,7 @@
                 </div>
                 <label for="regMode" th:text="#{RegistrationType}"></label>
                 <div class="col-10">
-                    <select class="form-control" id="regMode" name="registrationMode" th:field="*{registrationModeList}" th:disabled="true">
+                    <select class="form-control" id="regMode" name="registrationMode" th:field="*{registrationModeList}">
                         <option th:each="registrationMode : ${reliefConfig.registrationModeList}"
                                 th:value="${registrationMode}"
                                 th:text="${registrationMode.toString()}">
@@ -41,17 +41,17 @@
                 </div>
                 <label for="beneficiaryEntityFormChooser" th:text="#{BeneficiaryEntityFormLabel}"></label>
                 <div class="col-10 col" >
-                    <input type="file" class="form-control" id="beneficiaryEntityFormChooser" th:disabled="true"
+                    <input type="file" class="form-control" id="beneficiaryEntityFormChooser"
                            th:field="*{beneficiaryEntityFormChooser}">
                 </div>
                 <label for="beneficiaryEntityIdColumnTextField" th:text="#{AddBeneficiaryId}"></label>
                 <div class="col-10">
-                    <input type="text" class="form-control" id="beneficiaryEntityIdColumnTextField" th:disabled="true"
+                    <input type="text" class="form-control" id="beneficiaryEntityIdColumnTextField"
                            th:field="*{beneficiaryEntityIdColumnTextField}">
                 </div>
                 <label for="individualFormChooser" th:text="#{MemberFormLabel}"></label>
                 <div class="col-10">
-                    <input type="file" class="form-control" id="individualFormChooser" th:disabled="true"
+                    <input type="file" class="form-control" id="individualFormChooser"
                            th:field="*{individualFormChooser}">
                 </div>
             </div>
@@ -59,6 +59,61 @@
             <button type="submit" class="btn btn-primary btn-lg" th:text="#{SaveConfigSrvBtnLabel}"></button>
         </form>
     </div>
+    <th:block>
+        <script th:inline="javascript">
+            document.addEventListener("DOMContentLoaded", function (){
+                enableFields();
+
+                document.getElementById('authType').addEventListener('change', function() {
+                    const regModeSelect = document.getElementById('regMode');
+                    const selectedAuthType = this.value;
+
+                    // Clear existing options
+                    regModeSelect.innerHTML = '';
+
+                    // Add new options based on selected auth type
+                    if (selectedAuthType === 'REQUIRED_REGISTRATION' || selectedAuthType === 'OPTIONAL_REGISTRATION') {
+                        regModeSelect.disabled = false;
+                        ['INDIVIDUAL', 'HOUSEHOLD'].forEach(mode => {
+                            const option = document.createElement('option');
+                            option.value = mode;
+                            option.textContent = mode;
+                            regModeSelect.appendChild(option);
+                        });
+                    } else if (selectedAuthType === 'ID_ONLY_REGISTRATION') {
+                        regModeSelect.disabled = false;
+                        const option = document.createElement('option');
+                        option.value = 'INDIVIDUAL';
+                        option.textContent = 'INDIVIDUAL';
+                        regModeSelect.appendChild(option);
+                    } else if (selectedAuthType ==='NO_REGISTRATION'){
+                        enableFields();
+                    }
+                });
+
+                document.getElementById('regMode').addEventListener('change', function () {
+                    const selectedRegMode = this.value;
+                    const beneFormChooser = document.getElementById('beneficiaryEntityFormChooser');
+                    const beneEntityIDField = document.getElementById('beneficiaryEntityIdColumnTextField');
+                    const indiFormChooser = document.getElementById('individualFormChooser');
+
+                    beneFormChooser.disabled = false;
+                    beneEntityIDField.disabled = false;
+                    indiFormChooser.disabled = (selectedRegMode === 'INDIVIDUAL');
+                });
+
+                function enableFields(){
+                    document.getElementById('regMode').disabled = true;
+                    document.getElementById('beneficiaryEntityFormChooser').disabled = true;
+                    document.getElementById('beneficiaryEntityIdColumnTextField').disabled = true;
+                    document.getElementById('individualFormChooser').disabled = true;
+                    };
+            })
+
+
+
+        </script>
+    </th:block>
 </main>
 </body>
 </html>
