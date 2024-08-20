@@ -58,23 +58,11 @@ public class ReliefController {
     }
 
     @PostMapping
-    public ModelAndView updateForm(@ModelAttribute("reliefConfig") ReliefConfig reliefConfig){
-        reliefConfig.setRegistrationModeList(getRegistrationModes(reliefConfig.getAuthorizationType()));
+    public ModelAndView updateForm(@Valid @ModelAttribute("reliefConfig") ReliefConfig reliefConfig, BindingResult bindingResult, SessionStatus sessionStatus)
+            throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException{
 
         ModelAndView modelAndView = new ModelAndView(RELIEF_CONFIG);
         modelAndView.addObject("reliefConfig", reliefConfig);
         return modelAndView;
-    }
-    private List<RegistrationMode> getRegistrationModes(AuthorizationType authType){
-        switch(authType){
-            case ID_ONLY_REGISTRATION:
-                return Collections.singletonList(RegistrationMode.INDIVIDUAL);
-            case REQUIRED_REGISTRATION:
-            case OPTIONAL_REGISTRATION:
-                return Arrays.asList(RegistrationMode.INDIVIDUAL, RegistrationMode.HOUSEHOLD);
-            case NO_REGISTRATION:
-            default:
-                return Collections.emptyList();
-        }
     }
 }
