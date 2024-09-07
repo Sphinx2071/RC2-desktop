@@ -34,6 +34,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * InternalFileStoreUtil is a utility class that manages file storage and profile handling for the application.
+ * It provides methods for configuring file paths, managing profiles, and handling data import/export operations.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
+
 public class InternalFileStoreUtil {
   public static final String DEFAULT_PROFILE = "default";
 
@@ -56,6 +65,12 @@ public class InternalFileStoreUtil {
   private static String planningModuleName = null;
   private static SharedDataInstance dataInstance = null;
 
+  /**
+   * Configures the FileStoreUtil with a planning module name and shared data instance.
+   *
+   * @param name The name of the planning module
+   * @param sharedDataInstance The shared data instance
+   */
   public static void configFileStoreUtil(String name, SharedDataInstance sharedDataInstance) {
     planningModuleName = name;
     dataInstance = sharedDataInstance;
@@ -155,10 +170,27 @@ public class InternalFileStoreUtil {
     return profileNames;
   }
 
+  /**
+   * Reimports data from a selected directory into the current profile.
+   *
+   * @param selectedDirectory The File object representing the directory to import from
+   * @return A CompletableFuture<Void> representing the completion of the import operation
+   * @throws IOException If there's an error during the import process
+   * @throws IllegalAccessException If the utility hasn't been properly configured
+   */
   public static CompletableFuture<Void> reimportData(File selectedDirectory) throws IOException, IllegalAccessException {
     return importData(getProfileName(), selectedDirectory);
   }
 
+  /**
+   * Imports data from a selected directory into a specified profile.
+   *
+   * @param profileName The name of the profile to import into
+   * @param selectedDirectory The File object representing the directory to import from
+   * @return A CompletableFuture<Void> representing the completion of the import operation
+   * @throws IOException If there's an error during the import process
+   * @throws IllegalAccessException If the utility hasn't been properly configured
+   */
   public static CompletableFuture<Void> importData(String profileName, File selectedDirectory) throws IOException, IllegalAccessException {
     if(dataInstance == null) {
       throw new IOException("InternalFileStoreUtil has not had it's config function called yet");
@@ -179,6 +211,11 @@ public class InternalFileStoreUtil {
     return dataInstance.loadInputDataSource(getProfilePath(), snapshotPath);
   }
 
+  /**
+   * Clears the current profile information.
+   *
+   * @throws IllegalAccessException If the utility hasn't been properly configured
+   */
   public static void setNoProfile() throws IllegalAccessException {
     if(dataInstance == null) {
       throw new IllegalAccessException("InternalFileStoreUtil has not had it's config function called yet");

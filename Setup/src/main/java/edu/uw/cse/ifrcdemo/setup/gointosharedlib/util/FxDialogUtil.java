@@ -46,6 +46,17 @@ import java.util.concurrent.FutureTask;
 import static javafx.application.Platform.isFxApplicationThread;
 import static javafx.application.Platform.runLater;
 
+/**
+ * FxDialogUtil is a utility class for creating and displaying various types of JavaFX dialogs.
+ * It provides methods for showing confirmation, information, error, and warning dialogs,
+ * as well as file chooser dialogs. This class ensures that dialogs are displayed on the
+ * JavaFX Application Thread.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
+
 public class FxDialogUtil {
   private static final Logger logger = LogManager.getLogger(FxDialogUtil.class);
 
@@ -56,14 +67,32 @@ public class FxDialogUtil {
 
   private static Window owningWindow;
 
+  /**
+   * Sets the owning window for all dialogs created by this utility.
+   *
+   * @param newOwningWindow The Window to set as the owner for dialogs
+   */
   public static void setOwningWindow(Window newOwningWindow) {
     owningWindow = newOwningWindow;
   }
 
+  /**
+   * Gets the current owning window for dialogs.
+   *
+   * @return The current owning Window
+   */
   public static Window getOwningWindow() {
     return owningWindow;
   }
 
+  /**
+   * Configures and displays a confirmation dialog.
+   *
+   * @param title The title of the dialog
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @return The ButtonType selected by the user
+   */
   private static ButtonType configureConfirmDialogAndWait(String title, String header, String content) {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.initOwner(owningWindow);
@@ -76,6 +105,16 @@ public class FxDialogUtil {
     return result.get();
   }
 
+   /**
+   * Shows a confirmation dialog and waits for user input.
+   *
+   * @param title The title of the dialog
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @return The ButtonType selected by the user
+   * @throws ExecutionException If the computation threw an exception
+   * @throws InterruptedException If the current thread was interrupted while waiting
+   */
   public static ButtonType showConfirmDialogAndWait(String title, String header, String content)
       throws ExecutionException, InterruptedException {
     FutureTask<ButtonType> futureTask = new FutureTask(new Callable<ButtonType>() {
@@ -94,11 +133,24 @@ public class FxDialogUtil {
     }
   }
 
+  /**
+   * Shows an information dialog.
+   *
+   * @param header The header text of the dialog
+   */
   public static void showInfoDialog(String header) {
     showDialog(Alert.AlertType.INFORMATION,
         TranslationUtil.getTranslations().getString(TranslationConsts.DONE_LABEL), header, null);
   }
 
+  /**
+   * Shows a dialog of the specified type.
+   *
+   * @param type The Alert.AlertType of the dialog
+   * @param title The title of the dialog
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   */
   public static void showDialog(Alert.AlertType type, String title, String header, String content) {
     Runnable r = new Runnable() {
       @Override
@@ -120,29 +172,62 @@ public class FxDialogUtil {
     }
   }
 
+  /**
+   * Shows an error dialog.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   */
   public static void showErrorDialog(String header, String content) {
     showDialog(Alert.AlertType.ERROR,
         TranslationUtil.getTranslations().getString(TranslationConsts.ERROR_LABEL), header,
         content);
   }
 
+  /**
+   * Shows an error dialog.
+   *
+   * @param header The header text of the dialog
+   */
   public static void showErrorDialog(String header) {
     showDialog(Alert.AlertType.ERROR,
         TranslationUtil.getTranslations().getString(TranslationConsts.ERROR_LABEL), header, null);
   }
 
+  /**
+   * Shows a warning dialog.
+   *
+   * @param header The header text of the dialog
+   */
   public static void showWarningDialog(String header) {
     showDialog(Alert.AlertType.WARNING,
         TranslationUtil.getTranslations().getString(TranslationConsts.WARNING_DIALOG_TITLE), header,
         null);
   }
 
+  /**
+   * Shows a warning dialog.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   */
   public static void showWarningDialog(String header, String content) {
     showDialog(Alert.AlertType.WARNING,
         TranslationUtil.getTranslations().getString(TranslationConsts.WARNING_DIALOG_TITLE), header,
         content);
   }
 
+  /**
+   * Shows a scrolling dialog with expandable content.
+   *
+   * @param type The Alert.AlertType of the dialog
+   * @param title The title of the dialog
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param messageLabel The label for the expandable message area
+   * @param message The message to display in the expandable area
+   * @param setExpanded Whether the expandable area should be initially expanded
+   */
   public static void showScrollingDialog(Alert.AlertType type, String title, String header,
       String content, String messageLabel, String message, boolean setExpanded) {
 
@@ -186,23 +271,61 @@ public class FxDialogUtil {
     }
   }
 
+  /**
+   * Shows a scrolling dialog with expandable content.
+   *
+   * @param type The Alert.AlertType of the dialog
+   * @param title The title of the dialog
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param messageLabel The label for the expandable message area
+   * @param message The message to display in the expandable area
+   */
   public static void showScrollingDialog(Alert.AlertType type, String title, String header,
                                          String content, String messageLabel, String message) {
     showScrollingDialog(type, title, header, content, messageLabel, message, false);
   }
 
+  /**
+   * Shows a scrolling exception dialog.
+   *
+   * @param header The header text of the dialog
+   * @param e The exception to display
+   */
   public static void showScrollingExceptionDialog(String header, Exception e) {
     showScrollingExceptionDialog(header, e, false);
   }
 
+  /**
+   * Shows a scrolling exception dialog.
+   *
+   * @param header The header text of the dialog
+   * @param e The exception to display
+   * @param setExpanded Whether the exception details should be initially expanded
+   */
   public static void showScrollingExceptionDialog(String header, Exception e, boolean setExpanded) {
     showScrollingExceptionDialog(header, null, e, setExpanded);
   }
 
+  /**
+   * Shows a scrolling exception dialog.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param e The exception to display
+   */
   public static void showScrollingExceptionDialog(String header, String content, Exception e) {
     showScrollingExceptionDialog(header, content, e, false);
   }
 
+  /**
+   * Shows a scrolling exception dialog.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param e The exception to display
+   * @param setExpanded Whether the exception details should be initially expanded
+   */
   public static void showScrollingExceptionDialog(String header, String content, Exception e, boolean setExpanded) {
     ResourceBundle translations = TranslationUtil.getTranslations();
 
@@ -218,6 +341,15 @@ public class FxDialogUtil {
         exceptionText, setExpanded);
   }
 
+  /**
+   * Shows a scrolling error dialog with expandable content.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param messageLabel The label for the expandable message area
+   * @param message The message to display in the expandable area
+   * @param setExpanded Whether the expandable area should be initially expanded
+   */
   public static void showScrollingErrorDialog(String header, String content, String messageLabel,
       String message, boolean setExpanded) {
     showScrollingDialog(Alert.AlertType.ERROR,
@@ -225,11 +357,27 @@ public class FxDialogUtil {
         messageLabel, message, setExpanded);
   }
 
+  /**
+   * Shows a scrolling error dialog with expandable content.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param messageLabel The label for the expandable message area
+   * @param message The message to display in the expandable area
+   */
   public static void showScrollingErrorDialog(String header, String content, String messageLabel,
                                               String message) {
     showScrollingErrorDialog(header, content, messageLabel, message, false);
   }
 
+  /**
+   * Shows a scrolling warning dialog with expandable content.
+   *
+   * @param header The header text of the dialog
+   * @param content The content text of the dialog
+   * @param messageLabel The label for the expandable message area
+   * @param message The message to display in the expandable area
+   */
   public static void showScrollingWarningDialog(String header, String content, String messageLabel,
       String message) {
     showScrollingDialog(Alert.AlertType.WARNING,
@@ -237,8 +385,13 @@ public class FxDialogUtil {
         content, messageLabel, message);
   }
 
-
-
+  /**
+   * Shows a file chooser dialog.
+   *
+   * @return The selected Path, or null if no selection was made
+   * @throws ExecutionException If the computation threw an exception
+   * @throws InterruptedException If the current thread was interrupted while waiting
+   */
   public static Path showFileChooserDialog() throws ExecutionException, InterruptedException {
     if (Platform.isFxApplicationThread()) {
       return configureFileChooserDialog();
@@ -247,10 +400,20 @@ public class FxDialogUtil {
     }
   }
 
+  /**
+   * Shows a file chooser dialog asynchronously.
+   *
+   * @return A CompletableFuture that will resolve to the selected Path
+   */
   public static CompletableFuture<Path> showFileChooserDialogAsync() {
     return CompletableFuture.supplyAsync(FxDialogUtil::configureFileChooserDialog, Platform::runLater);
   }
 
+  /**
+   * Configures and displays a file chooser dialog.
+   *
+   * @return The selected Path, or null if no selection was made
+   */
   private static Path configureFileChooserDialog() {
     Path selectedDirectoryPath = null;
 
@@ -266,6 +429,13 @@ public class FxDialogUtil {
     return selectedDirectoryPath;
   }
 
+  /**
+   * Shows a template chooser dialog.
+   *
+   * @return The selected Path, or null if no selection was made
+   * @throws ExecutionException If the computation threw an exception
+   * @throws InterruptedException If the current thread was interrupted while waiting
+   */
   public static Path showTemplateChooserDialog() throws ExecutionException, InterruptedException {
 
     FutureTask<Path> futureTask = new FutureTask(new Callable<Path>() {
@@ -283,6 +453,11 @@ public class FxDialogUtil {
     }
   }
 
+  /**
+   * Configures and displays a template chooser dialog.
+   *
+   * @return The selected Path, or null if no selection was made
+   */
   private static Path configureTemplateChooserDialog() {
     Path selectedTemplatePath = null;
 

@@ -41,11 +41,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // TODO: change this name
+
+/**
+ * CsvFileUtil is a utility class for handling CSV file operations related to sync rows and custom tables.
+ * It provides methods for checking required files, reading base tables, and processing range CSV files.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class CsvFileUtil {
   /**
+   * Checks a directory for required files based on the module type.
    *
-   * @param dir
-   * @return Names of missing files
+   * @param dir The directory path to check
+   * @param moduleType The type of module (RELIEF or HEALTH)
+   * @return A List of String containing names of missing files
+   * @throws IllegalArgumentException if an invalid module type is provided
    */
   public static List<String> checkDirForRequiredFiles(Path dir, Module moduleType) {
     Stream<Class<? extends BaseSyncRow>> stream = null;
@@ -64,6 +76,15 @@ public class CsvFileUtil {
   }
 
   // TODO: move to CsvRepository?
+  /**
+   * Reads a base table with a custom table for entities that implement BaseSyncRow and HasCustomTable.
+   *
+   * @param <T> The type of the entity, extending BaseSyncRow and implementing HasCustomTable
+   * @param csvPath The path to the CSV file
+   * @param tableClass The class of the entity
+   * @param repo The CsvRepository to use for reading
+   * @return A CompletableFuture<Void> representing the completion of the read operation
+   */
   public static <T extends BaseSyncRow & HasCustomTable> CompletableFuture<Void> readBaseTableWithCustomTable(
       Path csvPath, Class<T> tableClass, CsvRepository repo) {
     Objects.requireNonNull(csvPath);
@@ -76,6 +97,16 @@ public class CsvFileUtil {
     );
   }
 
+  /**
+   * Reads a base table with a custom table, using a custom function to extract the table form ID.
+   *
+   * @param <T> The type of the entity, extending BaseSyncRow
+   * @param csvPath The path to the CSV file
+   * @param tableClass The class of the entity
+   * @param customTableExtractor A function to extract the custom table form ID from the entity
+   * @param repo The CsvRepository to use for reading
+   * @return A CompletableFuture<Void> representing the completion of the read operation
+   */
   public static <T extends BaseSyncRow> CompletableFuture<Void> readBaseTableWithCustomTable(
       Path csvPath, Class<T> tableClass, Function<T, String> customTableExtractor, CsvRepository repo) {
     Objects.requireNonNull(csvPath);
@@ -88,6 +119,16 @@ public class CsvFileUtil {
     );
   }
 
+  /**
+   * Reads a base table with a custom table, using a function to supply input streams.
+   *
+   * @param <T> The type of the entity, extending BaseSyncRow
+   * @param inputStreamSupplier A function that supplies input streams for given file names
+   * @param tableClass The class of the entity
+   * @param customTableExtractor A function to extract the custom table form ID from the entity
+   * @param repo The CsvRepository to use for reading
+   * @return A CompletableFuture<Void> representing the completion of the read operation
+   */
   public static <T extends BaseSyncRow> CompletableFuture<Void> readBaseTableWithCustomTable(
       Function<String, Supplier<InputStream>> inputStreamSupplier,
       Class<T> tableClass,
@@ -117,6 +158,15 @@ public class CsvFileUtil {
   }
 
   // TODO: move to CsvRepository?
+  /**
+   * Reads a base table from a CSV file.
+   *
+   * @param <T> The type of the entity, extending BaseSyncRow
+   * @param csvPath The path to the CSV file
+   * @param tableClass The class of the entity
+   * @param repo The CsvRepository to use for reading
+   * @return A CompletableFuture<Void> representing the completion of the read operation
+   */
   public static <T extends BaseSyncRow> CompletableFuture<Void> readBaseTable(
       Path csvPath, Class<T> tableClass, CsvRepository repo) {
     Objects.requireNonNull(csvPath);
@@ -126,6 +176,15 @@ public class CsvFileUtil {
     return readBaseTable(new FileInputStreamSupplier(FileUtil.getPathToCSV(csvPath, filename)), tableClass, repo);
   }
 
+  /**
+   * Reads a base table using an input stream supplier.
+   *
+   * @param <T> The type of the entity, extending BaseSyncRow
+   * @param inputStreamSupplier A supplier of input streams for the CSV data
+   * @param tableClass The class of the entity
+   * @param repo The CsvRepository to use for reading
+   * @return A CompletableFuture<Void> representing the completion of the read operation
+   */
   public static <T extends BaseSyncRow> CompletableFuture<Void> readBaseTable(
       Supplier<InputStream> inputStreamSupplier, Class<T> tableClass, CsvRepository repo) {
     Objects.requireNonNull(inputStreamSupplier);
@@ -144,6 +203,12 @@ public class CsvFileUtil {
     );
   }
 
+  /**
+   * Reads a range CSV file and returns a list of integers.
+   *
+   * @param csvFile The File object representing the CSV file
+   * @return A List of Integer values read from the CSV file, or null if the file is null
+   */
   public static List<Integer> readRangeCsv(File csvFile) {
     if (csvFile == null) {
       return null;

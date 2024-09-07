@@ -19,6 +19,15 @@ import edu.uw.cse.ifrcdemo.sharedlib.generator.BarcodeVoucher;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * BarcodeFormModel represents the data model for a barcode generation form.
+ * It contains information about the text prefix, range of numbers for barcode generation,
+ * and the resulting list of barcode vouchers.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class BarcodeFormModel {
 
   private String text;

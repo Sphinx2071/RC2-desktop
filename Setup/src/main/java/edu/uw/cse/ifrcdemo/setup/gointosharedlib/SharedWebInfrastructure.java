@@ -31,6 +31,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This class provides a shared infrastructure for web-based JavaFX applications.
+ * It encapsulates common web components like WebView, WebEngine, and Scene,
+ * and provides methods to interact with these components.
+ */
 public class SharedWebInfrastructure {
 
     private static final Logger logger = LogManager.getLogger(SharedWebInfrastructure.class);
@@ -40,6 +45,12 @@ public class SharedWebInfrastructure {
     private final Scene scene;
     private final Stage stage;
 
+    /**
+     * Constructs a SharedWebInfrastructure instance.
+     * Initializes WebView, WebEngine, and Scene, and sets up error handling and console logging.
+     *
+     * @param stage The primary stage for this JavaFX application
+     */
     public SharedWebInfrastructure(Stage stage) {
         this.stage = stage;
         this.browser = new WebView();
@@ -82,14 +93,31 @@ public class SharedWebInfrastructure {
         return webEngine;
     }
 
+    /**
+     * Adds a ChangeListener to the WebEngine's load worker state property.
+     * This listener will be notified of changes in the loading state of the web page.
+     *
+     * @param listener The ChangeListener to be added
+     */
     public void addListenerToWebEngine(ChangeListener<Worker.State> listener) {
         webEngine.getLoadWorker().stateProperty().addListener(listener);
     }
 
+    /**
+     * Sets a close handler for the stage. This handler will be called when
+     * a close request is made on the stage (e.g., when the user tries to close the window).
+     *
+     * @param handler The EventHandler to be set as the close handler
+     */
     public void setCloseHandler(EventHandler<WindowEvent> handler) {
         stage.setOnCloseRequest(handler);
     }
 
+    /**
+     * Loads a specified URL in the WebEngine.
+     *
+     * @param url The URL to be loaded
+     */
     public void loadUrl(String url) {
         webEngine.load(url);
     }

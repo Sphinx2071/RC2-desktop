@@ -30,15 +30,34 @@ import javafx.stage.Window;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * JsCallbackBase is a base class for handling JavaScript callbacks in a JavaFX WebView environment.
+ * It provides methods for opening various types of dialogs and executing JavaScript functions.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class JsCallbackBase {
     protected final Window window;
     protected final WebEngine webEngine;
 
+    /**
+     * Constructs a new JsCallbackBase instance.
+     *
+     * @param window The JavaFX Window in which dialogs will be displayed
+     * @param webEngine The WebEngine used for executing JavaScript
+     */
     public JsCallbackBase(Window window, WebEngine webEngine) {
         this.window = window;
         this.webEngine = webEngine;
     }
 
+    /**
+     * Opens a file dialog for selecting a CSV file and executes a JavaScript handler function.
+     *
+     * @param handlerFnName The name of the JavaScript function to call with the selected file path
+     */
     public void openFileDialogForCsv(String handlerFnName) {
         if (handlerFnName == null) {
             return;
@@ -67,7 +86,11 @@ public class JsCallbackBase {
 
     }
 
-
+    /**
+     * Opens a directory chooser dialog and executes a JavaScript handler function.
+     *
+     * @param handlerFnName The name of the JavaScript function to call with the selected directory path
+     */
     public void openSimpleFileDialog(String handlerFnName) {
         if (handlerFnName == null) {
             return;
@@ -88,7 +111,11 @@ public class JsCallbackBase {
             }
         }
     }
-
+    /**
+     * Opens an error dialog using FxDialogUtil.
+     *
+     * @param errorMessage The error message to display
+     */
     public void openFxErrorDialog(String errorMessage) {
         if (errorMessage == null) {
             return;
@@ -96,6 +123,11 @@ public class JsCallbackBase {
         FxDialogUtil.showErrorDialog(errorMessage);
     }
 
+    /**
+     * Opens a warning dialog using FxDialogUtil.
+     *
+     * @param warnMessage The warning message to display
+     */
     public void openFxWarnDialog(String warnMessage) {
         if (warnMessage == null) {
             return;
@@ -103,6 +135,11 @@ public class JsCallbackBase {
         FxDialogUtil.showWarningDialog(warnMessage);
     }
 
+    /**
+     * Opens an information dialog using FxDialogUtil.
+     *
+     * @param infoMessage The information message to display
+     */
     public void openFxInfoDialog(String infoMessage) {
         if (infoMessage == null) {
             return;
@@ -110,6 +147,14 @@ public class JsCallbackBase {
         FxDialogUtil.showInfoDialog(infoMessage);
     }
 
+    /**
+     * Opens a confirmation dialog using FxDialogUtil and returns the user's choice.
+     *
+     * @param confirmMessage The confirmation message to display
+     * @return true if the user confirmed, false otherwise
+     * @throws ExecutionException If the execution of the dialog fails
+     * @throws InterruptedException If the thread is interrupted while waiting for the dialog result
+     */
     public boolean openFxConfirmDialog(String confirmMessage) throws ExecutionException, InterruptedException {
         if (confirmMessage == null) {
             return false;
@@ -124,6 +169,9 @@ public class JsCallbackBase {
         return buttonType == ButtonType.OK;
     }
 
+    /**
+     * Clears the WebEngine's history.
+     */
     public void clearWebHistory() {
         WebHistory history = webEngine.getHistory();
         history.setMaxSize(0);
@@ -134,6 +182,11 @@ public class JsCallbackBase {
         }
     }
 
+    /**
+     * Opens a file dialog for selecting an XLSX file.
+     *
+     * @return An XlsxPath object containing the full path and display name of the selected file, or null if no file was selected
+     */
     public XlsxPath openFileDialogForXlsx() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(TranslationUtil.getTranslations().getString(TranslationConsts.CHOOSE_XLSX_LABEL));
@@ -152,6 +205,11 @@ public class JsCallbackBase {
         return null;
     }
 
+    /**
+     * Opens a file dialog for selecting a report template file.
+     *
+     * @return The absolute path of the selected template file, or null if no file was selected
+     */
     public String openFileDialogForReportTemplate() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choose a Template");

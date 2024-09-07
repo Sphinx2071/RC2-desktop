@@ -21,13 +21,35 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Supplier;
 
+/**
+ * FileInputStreamSupplier is a class that implements the Supplier interface to provide
+ * InputStreams for a given file path. This class is useful for creating InputStreams
+ * on demand, which can be particularly helpful in scenarios where multiple streams
+ * might be needed for the same file, or when the stream creation needs to be deferred.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class FileInputStreamSupplier implements Supplier<InputStream> {
   private final Path filePath;
 
+  /**
+   * Constructs a new FileInputStreamSupplier for the specified file path.
+   *
+   * @param filePath The Path object representing the file for which InputStreams will be supplied
+   */
   public FileInputStreamSupplier(Path filePath) {
     this.filePath = filePath;
   }
 
+  /**
+   * Creates and returns a new InputStream for the file path specified in the constructor.
+   * This method is called each time a new InputStream is needed.
+   *
+   * @return A new InputStream for the specified file
+   * @throws UncheckedIOException if an IOException occurs when creating the InputStream
+   */
   @Override
   public InputStream get() {
     try {

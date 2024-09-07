@@ -23,14 +23,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+/**
+ * PreferencesLocaleResolver is a service class that extends AbstractLocaleResolver
+ * to resolve and set locales based on application preferences.
+ *
+ * This resolver uses LocaleUtil to get and set the current locale, and
+ * updates translations when the locale is changed.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 @Service
 public class PreferencesLocaleResolver extends AbstractLocaleResolver {
   private final Logger logger;
 
+  /**
+   * Constructs a new PreferencesLocaleResolver with the specified logger.
+   *
+   * @param logger The Logger to be used for logging operations
+   */
   public PreferencesLocaleResolver(Logger logger) {
     this.logger = logger;
   }
 
+  /**
+   * Resolves the current locale based on application preferences.
+   *
+   * @param request The HttpServletRequest (not used in this implementation)
+   * @return The current Locale as determined by LocaleUtil
+   */
   @Override
   public Locale resolveLocale(HttpServletRequest request) {
     Locale locale = LocaleUtil.getCurrentLocale();
@@ -39,6 +61,13 @@ public class PreferencesLocaleResolver extends AbstractLocaleResolver {
     return locale;
   }
 
+  /**
+   * Sets the current locale and updates translations accordingly.
+   *
+   * @param request The HttpServletRequest (not used in this implementation)
+   * @param response The HttpServletResponse (not used in this implementation)
+   * @param locale The Locale to set as the current locale
+   */
   @Override
   public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
     logger.debug("Setting locale to {}", locale);

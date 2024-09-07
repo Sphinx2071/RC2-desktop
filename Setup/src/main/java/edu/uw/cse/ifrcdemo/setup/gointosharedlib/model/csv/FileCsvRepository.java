@@ -39,6 +39,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * FileCsvRepository is an implementation of the CsvRepository interface that manages
+ * CSV file operations using file-based storage. It provides functionality for reading
+ * both typed and untyped CSV data, caching the results, and creating indexed versions
+ * of the data for efficient access.
+ *
+ * This class uses concurrent data structures to ensure thread-safety and employs
+ * asynchronous operations for potentially time-consuming file reads.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class FileCsvRepository implements CsvRepository {
 
 
@@ -71,6 +84,10 @@ public class FileCsvRepository implements CsvRepository {
     return objectReaderCache;
   }
 
+  /**
+   * Constructs a new FileCsvRepository instance.
+   * Initializes internal data structures and the CSV mapper.
+   */
   public FileCsvRepository() {
     this.untypedCsv = new ConcurrentHashMap<>();
     this.typedCsv = new ConcurrentHashMap<>();
@@ -83,12 +100,12 @@ public class FileCsvRepository implements CsvRepository {
   }
 
   /**
-   * Reads in an untyped csv and stores in cache by path
+   * Reads an untyped CSV file asynchronously and stores the result in the cache.
    *
-   * @param filename
-   * @param input
-   * @param purgeCache
-   * @return
+   * @param filename The name of the CSV file to read
+   * @param input An InputStream containing the CSV data
+   * @param purgeCache If true, purges any existing cached data for this file
+   * @return A CompletableFuture that resolves to a List of UntypedSyncRow objects
    */
   @Override
   public CompletableFuture<List<UntypedSyncRow>> readUntypedCsv(String filename, InputStream input, boolean purgeCache) {
@@ -124,12 +141,13 @@ public class FileCsvRepository implements CsvRepository {
   }
 
   /**
-   * Reads in a typed csv and stores in cache by path
+   * Reads a typed CSV file asynchronously and stores the result in the cache.
    *
-   * @param clazz
-   * @param input
-   * @param purgeCache
-   * @return
+   * @param <T> The type of BaseSyncRow to read
+   * @param clazz The Class object representing the type T
+   * @param input An InputStream containing the CSV data
+   * @param purgeCache If true, purges any existing cached data for this class
+   * @return A CompletableFuture that resolves to a List of BaseSyncRow objects
    */
   @Override
   public <T extends BaseSyncRow> CompletableFuture<List<? extends BaseSyncRow>> readTypedCsv(Class<T> clazz,
@@ -167,10 +185,10 @@ public class FileCsvRepository implements CsvRepository {
   }
 
   /**
-   * Reads from cache
+   * Retrieves untyped CSV data from the cache.
    *
-   * @param filename
-   * @return
+   * @param filename The name of the CSV file
+   * @return An Optional containing a List of UntypedSyncRow objects, or empty if not found
    */
   @Override
   public Optional<List<UntypedSyncRow>> readUntypedCsv(String filename) {
@@ -182,10 +200,11 @@ public class FileCsvRepository implements CsvRepository {
   }
 
   /**
-   * Reads from cache
+   * Retrieves typed CSV data from the cache.
    *
-   * @param clazz
-   * @return
+   * @param <T> The type of BaseSyncRow to retrieve
+   * @param clazz The Class object representing the type T
+   * @return An Optional containing a List of T objects, or empty if not found
    */
   @Override
   public <T extends BaseSyncRow> Optional<List<T>> readTypedCsv(Class<T> clazz) {
@@ -197,6 +216,12 @@ public class FileCsvRepository implements CsvRepository {
         .map(Collections::unmodifiableList);
   }
 
+  /**
+   * Retrieves indexed untyped CSV data from the cache.
+   *
+   * @param filename The name of the CSV file
+   * @return An Optional containing a Map of String keys to UntypedSyncRow objects, or empty if not found
+   */
   @Override
   public Optional<Map<String, UntypedSyncRow>> readIndexedUntypedCsv(String filename) {
     logger.trace(LogStr.LOG_READING_INDEXED_FROM_CACHE, filename);
@@ -207,6 +232,13 @@ public class FileCsvRepository implements CsvRepository {
         .map(Collections::unmodifiableMap);
   }
 
+  /**
+   * Retrieves indexed typed CSV data from the cache.
+   *
+   * @param <T> The type of BaseSyncRow to retrieve
+   * @param clazz The Class object representing the type T
+   * @return An Optional containing a Map of String keys to T objects, or empty if not found
+   */
   @Override
   public <T extends BaseSyncRow> Optional<Map<String, T>> readIndexedTypedCsv(Class<T> clazz) {
     logger.trace(LogStr.LOG_READING_INDEXED_FROM_CACHE, clazz::getSimpleName);
@@ -217,15 +249,37 @@ public class FileCsvRepository implements CsvRepository {
         .map(Collections::unmodifiableMap);
   }
 
+  /**
+   * Retrieves or creates an ObjectReader for the specified BaseSyncRow class.
+   * This method uses a cache to store and reuse ObjectReaders for efficiency.
+   *
+   * @param clazz The Class object representing a subclass of BaseSyncRow
+   * @return An ObjectReader configured for the specified class
+   */
   private ObjectReader getObjectReader(Class<? extends BaseSyncRow> clazz) {
     return getObjectReaderCache()
         .computeIfAbsent(clazz, aClass -> CsvMapperUtil.getReader(aClass, getMapper(), true));
   }
 
+  /**
+   * Creates an indexed map of BaseSyncRow objects using their row IDs as keys.
+   *
+   * @param <T> The type of BaseSyncRow
+   * @param list The list of BaseSyncRow objects to index
+   * @return A Map with row IDs as keys and BaseSyncRow objects as values
+   */
   private <T extends BaseSyncRow> Map<String, T> indexRowList(List<T> list) {
     return indexRowList(list, BaseSyncRow::getRowId);
   }
 
+  /**
+   * Creates an indexed map of BaseSyncRow objects using a custom key function.
+   *
+   * @param <T> The type of BaseSyncRow
+   * @param list The list of BaseSyncRow objects to index
+   * @param keyFunc A function to extract the key from each BaseSyncRow object
+   * @return A Map with custom keys and BaseSyncRow objects as values
+   */
   private <T extends BaseSyncRow> Map<String, T> indexRowList(List<T> list, Function<T, ? extends String> keyFunc) {
     return list.stream().collect(Collectors.toMap(keyFunc, Function.identity()));
   }

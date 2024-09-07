@@ -14,12 +14,28 @@
 
 package edu.uw.cse.ifrcdemo.setup.gointosharedlib.model.range;
 
+/**
+ * RangeDescriptor is an abstract class that defines the structure for objects
+ * representing a range of long values. It provides abstract methods for getting
+ * and setting the minimum and maximum values of the range, as well as a concrete
+ * method to check if a value is within the range.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public abstract class RangeDescriptor {
 	abstract public long getMin();
 	abstract public long getMax();
 	abstract public void setMin(long min);
 	abstract public void setMax(long max);
-	
+
+	/**
+	 * Checks if a given value is within the range, inclusive of the minimum and maximum values.
+	 *
+	 * @param val The value to check
+	 * @return true if the value is within the range, false otherwise
+	 */
 	public boolean contains(long val) {
 		return getMin() <= val && getMax() >= val;
 	}

@@ -30,7 +30,26 @@ import java.nio.file.Path;
 
 import static edu.uw.cse.ifrcdemo.setup.gointosharedlib.util.FxDialogUtil.showScrollingExceptionDialog;
 
+/**
+ * ControllerPdfUtil is a utility class for generating and displaying PDF reports from HTML templates.
+ * It provides functionality to process HTML templates, generate PDFs, and open them using the default system viewer.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class ControllerPdfUtil {
+
+  /**
+   * Generates a PDF report from an HTML template and opens it using the default system viewer.
+   *
+   * @param webContext The WebContext containing data to be used in the template
+   * @param reportName The name of the report (used for the temporary file name)
+   * @param templateLocation The location of the HTML template file
+   * @param logger The Logger instance for error logging
+   * @param templateEngine The TemplateEngine used to process the HTML template
+   * @throws RuntimeException if there's an error creating the temporary file
+   */
   public static void writeControllerPdf(WebContext webContext, String reportName,
       String templateLocation,
       Logger logger, TemplateEngine templateEngine) {

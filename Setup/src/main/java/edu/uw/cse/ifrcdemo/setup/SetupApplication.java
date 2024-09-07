@@ -61,6 +61,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+/**
+ * SetupApplication is the main class for the Setup application.
+ * It extends JavaFX's Application class and implements Spring's WebMvcConfigurer interface,
+ * combining JavaFX GUI capabilities with Spring Boot's web application features.
+ *
+ * This class initializes the application, sets up the main window, configures Spring beans,
+ * and handles application lifecycle events.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 @SpringBootApplication
 public class SetupApplication extends Application implements WebMvcConfigurer {
 
@@ -72,6 +84,11 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
   private static ChangeListener<Worker.State> listener;
   private static EventHandler<WindowEvent> closeHandler;
 
+  /**
+   * Starts the JavaFX application, setting up the main window and web infrastructure.
+   *
+   * @param stage The primary stage for this application
+   */
   @Override
   public void start(Stage stage) {
     swi = new SharedWebInfrastructure(stage);
@@ -88,6 +105,12 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
     stage.show();
   }
 
+  /**
+   * The main entry point for the application.
+   * Initializes the system, starts the Spring application context, and launches the JavaFX application.
+   *
+   * @param args Command line arguments
+   */
   public static void main(String[] args) {
     SetupAppSystem.systemInit();
     SetupAppSystem.initAllConfigs();
@@ -106,11 +129,22 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
   /*
    * Bean needed for language change
    */
+  /**
+   * Configures the locale resolver bean.
+   *
+   * @param resolver The PreferencesLocaleResolver to use
+   * @return The configured LocaleResolver
+   */
   @Bean
   public LocaleResolver localeResolver(PreferencesLocaleResolver resolver) {
     return resolver;
   }
 
+  /**
+   * Adds interceptors to the Spring MVC request processing pipeline.
+   *
+   * @param registry The InterceptorRegistry to which the interceptors are added
+   */
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LocaleChangeInterceptor());
@@ -124,6 +158,12 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
     });
   }
 
+  /**
+   * Configures a prototype-scoped Logger bean.
+   *
+   * @param injectionPoint The injection point for the Logger
+   * @return A Logger instance
+   */
   @Bean
   @Scope(BeanDefinition.SCOPE_PROTOTYPE)
   public Logger logger(InjectionPoint injectionPoint) {
@@ -145,12 +185,23 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
     return LogManager.getLogger(loggingClass);
   }
 
+  /**
+   * Configures the ObjectMapper bean.
+   *
+   * @return An ObjectMapper instance
+   */
   @Bean
   public ObjectMapper objectMapper() {
     ObjectMapper objectMapper = new ObjectMapper();
     return objectMapper;
   }
 
+  /**
+   * Configures a prototype-scoped MustacheFactory bean.
+   *
+   * @param logger The Logger to use
+   * @return A MustacheFactory instance
+   */
   @Bean
   @Scope(BeanDefinition.SCOPE_PROTOTYPE) // use prototype to prevent template caching
   public MustacheFactory mustacheFactory(Logger logger) {
@@ -164,15 +215,34 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
     });
   }
 
+  /**
+   * SetupChangeListener is an inner class that implements ChangeListener<Worker.State>.
+   * It listens for changes in the WebEngine's worker state and sets up JavaScript
+   * integration when the page load is successful.
+   */
   private class SetupChangeListener implements ChangeListener<Worker.State> {
     private final Scene scene;
     private final WebEngine webEngine;
 
+    /**
+     * Constructs a SetupChangeListener with the given SharedWebInfrastructure.
+     *
+     * @param swi The SharedWebInfrastructure containing the scene and WebEngine
+     */
     public SetupChangeListener(SharedWebInfrastructure swi) {
       this.scene = swi.getScene();
       this.webEngine = swi.getWebEngine();
     }
 
+    /**
+     * Called when the worker's state changes. If the new state is SUCCEEDED,
+     * it sets up JavaScript integration by adding a 'javafx' member to the window
+     * object and dispatches a 'javafxReady' event.
+     *
+     * @param observable The ObservableValue which value changed
+     * @param oldValue The old state value
+     * @param newValue The new state value
+     */
     @Override
     public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
                         Worker.State newValue) {
@@ -184,7 +254,19 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
     }
   }
 
+  /**
+   * SetupCloseEventHandler is an inner class that implements EventHandler<WindowEvent>.
+   * It handles the window close event, showing a confirmation dialog before closing the application.
+   */
   private class SetupCloseEventHandler implements EventHandler<WindowEvent> {
+
+    /**
+     * Handles the window close event. Shows a confirmation dialog and, if confirmed,
+     * stops and closes the application context. If not confirmed, consumes the event
+     * to prevent the window from closing.
+     *
+     * @param event The WindowEvent to handle
+     */
     @Override
     public void handle(WindowEvent event) {
       try {

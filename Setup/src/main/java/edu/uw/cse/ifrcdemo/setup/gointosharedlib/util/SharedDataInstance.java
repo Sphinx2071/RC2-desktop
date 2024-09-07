@@ -21,6 +21,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * SharedDataInstance is an abstract class that defines the common interface for managing shared data
+ * across different modules in the application. It provides methods for loading input data,
+ * clearing repositories, retrieving auxiliary properties, and identifying the module type.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public abstract class SharedDataInstance {
     public abstract CompletableFuture<Void> loadInputDataSource(Path profile, Path snapshot)
             throws IOException;

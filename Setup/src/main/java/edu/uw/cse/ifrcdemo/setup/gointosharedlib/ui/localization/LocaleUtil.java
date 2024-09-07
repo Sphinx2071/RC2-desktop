@@ -22,11 +22,26 @@ import java.util.Locale;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+/**
+ * LocaleUtil is a utility class for managing the application's locale settings.
+ * It provides methods to get and set the current locale, persisting the setting
+ * using Java Preferences API.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class LocaleUtil {
   private static final String PREF_KEY = "locale";
 
   private static final Logger logger = LogManager.getLogger(LocaleUtil.class);
 
+  /**
+   * Retrieves the current locale setting.
+   * If no locale has been set, it defaults to US locale.
+   *
+   * @return The current Locale object
+   */
   public static Locale getCurrentLocale() {
     String localeStr = Preferences
         .userNodeForPackage(LocaleUtil.class)
@@ -41,6 +56,13 @@ public class LocaleUtil {
     return locale;
   }
 
+  /**
+   * Sets the current locale and persists it using Java Preferences API.
+   * This method also flushes the preferences to ensure the setting is saved,
+   * which helps prevent intermittent exceptions on exit when run under JavaFX.
+   *
+   * @param locale The Locale to set as the current locale
+   */
   public static void setLocale(Locale locale) {
     Preferences preferences = Preferences.userNodeForPackage(LocaleUtil.class);
 

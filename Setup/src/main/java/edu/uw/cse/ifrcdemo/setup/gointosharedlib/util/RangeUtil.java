@@ -21,7 +21,23 @@ import edu.uw.cse.ifrcdemo.sharedlib.consts.GenConsts;
 import java.util.*;
 import java.util.stream.LongStream;
 
+/**
+ * RangeUtil is a utility class that provides various methods for working with ranges and collections of integers.
+ * It includes functionality for converting ranges to streams, calculating totals, finding available numbers,
+ * checking for overlaps, and converting ranges to display strings.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class RangeUtil {
+
+  /**
+   * Converts a list of Range objects to a LongStream.
+   *
+   * @param ranges The list of Range objects to convert
+   * @return A LongStream representing all the numbers in the ranges
+   */
   public static LongStream toLongStream(List<Range> ranges) {
     if (ranges != null) {
       return ranges.stream().map(Range::toLongStream).reduce(LongStream::concat).orElse(LongStream.empty());
@@ -30,6 +46,12 @@ public class RangeUtil {
     }
   }
 
+  /**
+   * Calculates the total count of numbers represented by a list of Range objects.
+   *
+   * @param ranges The list of Range objects
+   * @return The total count of numbers, or Long.MAX_VALUE if the list is empty
+   */
   public static long getTotalCount(List<Range> ranges) {
     if (ranges.isEmpty()) {
       return Long.MAX_VALUE;
@@ -43,10 +65,11 @@ public class RangeUtil {
   }
 
   /**
+   * Finds the next available integer from an iterator that is not present in a set of used integers.
    *
-   * @param ofInt
-   * @param usedInts
-   * @return
+   * @param ofInt The iterator of integers
+   * @param usedInts The set of already used integers
+   * @return The next available integer
    * @throws NoSuchElementException if the iteration has no more elements
    */
   public static int getNextAvailable(PrimitiveIterator.OfInt ofInt, Set<Integer> usedInts) {
@@ -60,6 +83,14 @@ public class RangeUtil {
   }
 
   // given a list of ranges and a new range, mutate list to include range and remove overlaps
+  /**
+   * Checks for overlaps between a new range and a list of existing ranges, merging overlapping ranges.
+   *
+   * @param <T> A type that extends RangeDescriptor
+   * @param range The new range to check
+   * @param ranges The list of existing ranges
+   * @return The merged range if overlap was found, or the original range if no overlap
+   */
   public static <T extends RangeDescriptor> T checkOverlap(T range, List<T> ranges) {
     boolean found = false;
     T overlapped = null;
@@ -83,9 +114,22 @@ public class RangeUtil {
     }
   }
 
+  /**
+   * Converts a Range object to a display string.
+   *
+   * @param r The Range object to convert
+   * @return A string representation of the range
+   */
   public static String toDisplayString(Range r) {
     return r.getMin() + GenConsts.DASH + r.getMax();
   }
+
+  /**
+   * Calculates a list of Range objects from a list of integer values.
+   *
+   * @param values The list of integer values
+   * @return An ArrayList of Range objects representing the input values
+   */
 
   public static ArrayList<Range> calculateRangesFromInts(List<Integer> values) {
     ArrayList<Range> ranges = new ArrayList<Range>();

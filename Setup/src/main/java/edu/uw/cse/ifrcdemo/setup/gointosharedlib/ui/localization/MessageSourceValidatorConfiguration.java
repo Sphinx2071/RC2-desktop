@@ -19,8 +19,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+/**
+ * Configuration class for setting up a LocalValidatorFactoryBean with a custom MessageSource.
+ * This configuration allows for internationalized validation messages in Spring applications.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 @Configuration
 public class MessageSourceValidatorConfiguration {
+  /**
+   * Creates and configures a LocalValidatorFactoryBean with the provided MessageSource.
+   * This bean is used for validation in Spring applications, allowing for
+   * internationalized validation messages.
+   *
+   * @param messageSource The MessageSource to be used for validation messages
+   * @return A configured LocalValidatorFactoryBean
+   */
   @Bean
   public LocalValidatorFactoryBean localValidatorFactoryBean(MessageSource messageSource) {
     LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();

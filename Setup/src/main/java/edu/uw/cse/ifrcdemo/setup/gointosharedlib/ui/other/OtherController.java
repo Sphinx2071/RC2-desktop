@@ -40,6 +40,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * OtherController handles requests related to miscellaneous functionalities,
+ * primarily focusing on barcode generation and CSV range processing.
+ *
+ * This controller is mapped to the "/other" path and manages session attributes
+ * of type BarcodeFormModel.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 @Controller
 @RequestMapping("/other")
 @SessionAttributes(types = { BarcodeFormModel.class })
@@ -54,28 +65,57 @@ public class OtherController {
 
   private final TemplateEngine templateEngine;
 
+  /**
+   * Constructs an OtherController with the specified logger and template engine.
+   *
+   * @param logger The logger to be used for logging
+   * @param templateEngine The template engine for processing views
+   */
   public OtherController(Logger logger, TemplateEngine templateEngine) {
     this.logger = logger;
     this.templateEngine = templateEngine;
   }
 
+  /**
+   * Creates a new BarcodeFormModel for use in the session.
+   *
+   * @return A new BarcodeFormModel instance
+   */
   @ModelAttribute("barcodeFormModel")
   public BarcodeFormModel newBarcodeFormModel() {
     BarcodeFormModel barcodeFormModel = new BarcodeFormModel();
     return barcodeFormModel;
   }
 
+  /**
+   * Handles GET requests to show other options.
+   *
+   * @return The view name for other items menu
+   */
   @GetMapping("")
   public String showOtherOptions() {
     return OTHER_ITEMS_MENU;
   }
 
+  /**
+   * Handles GET requests to show the barcode generator form.
+   *
+   * @param barcodeFormModel The model attribute for barcode form data
+   * @return ModelAndView for the barcode generator page
+   */
   @GetMapping("barcodes")
   public ModelAndView showBarcodeGenerator(
       @ModelAttribute("barcodeFormModel") BarcodeFormModel barcodeFormModel) {
     return new ModelAndView(OTHER_BARCODE_GENERATOR);
   }
 
+  /**
+   * Handles POST requests to generate barcodes.
+   *
+   * @param barcodeFormModel The model attribute for barcode form data
+   * @param bindingResult The binding result for validation errors
+   * @return ModelAndView redirecting to barcode output page
+   */
   @PostMapping("barcodes")
   public ModelAndView generateBarcodes(
       @Valid @ModelAttribute("barcodeFormModel") BarcodeFormModel barcodeFormModel,
@@ -88,6 +128,13 @@ public class OtherController {
     return new ModelAndView("redirect:barcodeOutput");
   }
 
+  /**
+   * Handles GET requests to output generated barcodes.
+   *
+   * @param barcodeFormModel The model attribute for barcode form data
+   * @param bindingResult The binding result for validation errors
+   * @return ModelAndView for the barcode output page
+   */
   @GetMapping("barcodeOutput")
   public ModelAndView outputBarcodes(
       @Valid @ModelAttribute("barcodeFormModel") BarcodeFormModel barcodeFormModel,
@@ -102,6 +149,14 @@ public class OtherController {
     return new ModelAndView(OTHER_BARCODE_OUTPUT);
   }
 
+  /**
+   * Handles POST requests to output barcode documents.
+   *
+   * @param barcodeFormModel The model attribute for barcode form data
+   * @param request The HTTP servlet request
+   * @param response The HTTP servlet response
+   * @return ResponseEntity with success message
+   */
   @PostMapping("barcodeOutput")
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<String> outputBarcodesDocument(
@@ -136,6 +191,12 @@ public class OtherController {
     return new ResponseEntity<>("Success!", HttpStatus.OK);
   }
 
+  /**
+   * Generates a list of BarcodeVoucher objects based on the given BarcodeFormModel.
+   * This method creates barcodes for a range of numbers, applying any specified text prefix.
+   *
+   * @param barcodeFormModel The model containing barcode generation parameters
+   */
   private void generateBarcodes(
       @ModelAttribute("barcodeFormModel") BarcodeFormModel barcodeFormModel) {
     Integer start = barcodeFormModel.getRangeStart();
@@ -165,11 +226,25 @@ public class OtherController {
     barcodeFormModel.setVoucherList(barcodes);
   }
 
+  /**
+   * Writes a report to a PDF file using the provided WebContext, report name, and template location.
+   * This method utilizes ControllerPdfUtil to generate the PDF.
+   *
+   * @param webContext The WebContext containing data for the report
+   * @param reportName The name to be used for the generated report file
+   * @param templateLocation The location of the template to be used for the report
+   */
   private void writeReport(WebContext webContext, String reportName, String templateLocation) {
     ControllerPdfUtil.writeControllerPdf(webContext, reportName, templateLocation, logger,
         templateEngine);
   }
 
+  /**
+   * Handles GET requests to import CSV range data.
+   *
+   * @param request The HTTP servlet request
+   * @return List of Range objects parsed from the CSV file
+   */
   @GetMapping("getCsvRange")
   @ResponseBody
   public List<Range> importCsvRange(HttpServletRequest request) {

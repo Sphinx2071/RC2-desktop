@@ -14,10 +14,24 @@
 
 package edu.uw.cse.ifrcdemo.setup.gointosharedlib.ui.xlsx;
 
+/**
+ * XlsxPath represents a path to an XLSX file, containing both the full path and a display name.
+ * This class is immutable, with all fields being final.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class XlsxPath {
   public final String fullPath;
   public final String display;
 
+  /**
+   * Constructs a new XlsxPath with the specified full path and display name.
+   *
+   * @param fullPath The complete path to the XLSX file
+   * @param display The display name or shortened path for the file
+   */
   public XlsxPath(String fullPath, String display) {
     this.fullPath = fullPath;
     this.display = display;

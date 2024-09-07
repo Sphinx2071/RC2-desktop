@@ -24,6 +24,18 @@ import org.springframework.boot.logging.LogFile;
 
 import java.io.IOException;
 
+/**
+ * BaseAppSystem is a utility class that provides initialization methods for various
+ * configurations in the application, including logging, error reporting (Sentry),
+ * and translations.
+ *
+ * <p>This class contains constants for preferred window dimensions and methods to
+ * initialize different aspects of the application.</p>
+ *
+ * @author University of Washington
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class BaseAppSystem {
     // constants
     public static final int PREF_WIDTH = 1200;
@@ -33,14 +45,23 @@ public class BaseAppSystem {
     private static final String RC_2_LOG = "rc2.log";
 
     // shared global variables
+    /** Flag indicating whether the system has been initialized. */
     protected static boolean systemInit = false;
 
+    /**
+     * Initializes all configurations for the application.
+     * This method calls initLogging(), initSentry(), and initTranslations().
+     */
     public static void initAllConfigs() {
        initLogging();
        initSentry();
        initTranslations();
     }
 
+    /**
+     * Initializes the logging system for the application.
+     * Sets up the log file location and configures the Java logging manager.
+     */
     public static void initLogging() {
         System.setProperty(LogConsts.JAVA_LOG_MANAGER_PROPERTY, LogConsts.JAVA_LOG_MANAGER_VALUE);
         try {
@@ -51,6 +72,10 @@ public class BaseAppSystem {
         }
     }
 
+    /**
+     * Initializes the Sentry error reporting system.
+     * Configures Sentry with the appropriate release version and DNS.
+     */
     public static void initSentry() {
         System.setProperty(SPRING_DEVTOOLS_RESTART_ENABLED, Boolean.FALSE.toString());
         System.setProperty(SentryConsts.SENTRY_RELEASE_VERSION_PROPERTY,
@@ -59,6 +84,10 @@ public class BaseAppSystem {
         Sentry.init();
     }
 
+    /**
+     * Initializes the translation system for the application.
+     * Loads translations based on the current locale.
+     */
     public static void initTranslations() {
         TranslationUtil.loadTranslationsFromLocale(LocaleUtil.getCurrentLocale());
     }

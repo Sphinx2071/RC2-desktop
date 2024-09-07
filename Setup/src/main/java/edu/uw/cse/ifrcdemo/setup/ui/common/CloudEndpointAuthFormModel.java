@@ -19,6 +19,16 @@ import org.opendatakit.suitcase.model.CloudEndpointInfo;
 
 import java.net.MalformedURLException;
 
+/**
+ * CloudEndpointAuthFormModel is an interface that defines the structure for
+ * authentication form models used to connect to cloud endpoints.
+ * It provides methods for getting and setting server URL, username, and password,
+ * as well as a default method to convert the model to a CloudEndpointInfo object.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this interface was introduced]
+ */
 public interface CloudEndpointAuthFormModel {
     String getServerUrl();
 
@@ -32,6 +42,14 @@ public interface CloudEndpointAuthFormModel {
 
     void setPassword(String password);
 
+    /**
+     * Converts the form model to a CloudEndpointInfo object.
+     * This default implementation creates a CloudEndpointInfo using the server URL,
+     * a default app ID, username, and password.
+     *
+     * @return a CloudEndpointInfo object representing the authentication information
+     * @throws MalformedURLException if the server URL is not a valid URL
+     */
     default CloudEndpointInfo toCloudEndpointInfo() throws MalformedURLException {
         return new CloudEndpointInfo(
                 getServerUrl(),

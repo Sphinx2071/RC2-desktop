@@ -20,6 +20,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 import java.util.stream.LongStream;
 
+/**
+ * Range represents a range of long values with a minimum and maximum.
+ * This class extends RangeDescriptor and provides JSON serialization support.
+ *
+ * @author [Your Name]
+ * @version 1.0
+ * @since [The release or version this class was introduced]
+ */
 public class Range extends RangeDescriptor {
 
   @JsonProperty(required = true)
@@ -28,11 +36,20 @@ public class Range extends RangeDescriptor {
   @JsonProperty(required = true)
   private long max;
 
+  /**
+   * Default constructor. Initializes min and max to -1.
+   */
   public Range() {
     this.min = -1;
     this.max = -1;
   }
 
+  /**
+   * Constructor with min and max values.
+   *
+   * @param min The minimum value of the range
+   * @param max The maximum value of the range
+   */
   @JsonCreator
   public Range(@JsonProperty(value = "min", required = true) long min,
                @JsonProperty(value = "max", required = true) long max) {
@@ -56,6 +73,11 @@ public class Range extends RangeDescriptor {
     this.max = max;
   }
 
+  /**
+   * Converts the range to a LongStream.
+   *
+   * @return A LongStream representing all values in the range, inclusive
+   */
   public LongStream toLongStream() {
     return LongStream.rangeClosed(getMin(), getMax());
   }
