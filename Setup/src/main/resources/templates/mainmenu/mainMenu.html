@@ -21,13 +21,17 @@
         <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
 
         <div th:replace="~{fragments/menu :: item(
-        @{/config}, #{ServerTxt}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
+        @{/reliefconfig}, #{ConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
+
+        <div th:replace="~{fragments/menu :: item(
+        @{/healthconfig}, #{HealthConfigSrvBtnLabel}, @{/img/dist_list_icon.svg}, #{ServerSettings}, false)}"></div>
 
         <div th:replace="~{fragments/menu :: item(
         @{/other/barcodes}, #{GenBarcodeBtnLabel}, @{/img/create_barcodes_icon.svg}, #{GenBarcodeBtnLabel}, false)}"></div>
 
         <div th:replace="~{fragments/menu :: item(
-        @{/serverlogin}, #{ResertSrvBtnLabel}, @{/img/other_options_icon.svg}, #{PermanentlyDeleteServerWarning}, false)}"></div>
+        @{/login}, #{ResertSrvBtnLabel}, @{/img/other_options_icon.svg}, #{PermanentlyDeleteServerWarning}, false)}"></div>
+
         <!--todo: figure out last argument for my implementation.
         Old implementation(${disableButtons || isNoRegMode}) replaced with hardcoded boolean values above.-->
     </main>

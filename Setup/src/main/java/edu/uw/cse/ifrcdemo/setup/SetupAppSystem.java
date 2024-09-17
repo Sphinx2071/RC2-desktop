@@ -24,7 +24,7 @@ public class SetupAppSystem extends BaseAppSystem {
     public static final String SETUP_MODULE_NAME = "Setup";
 
     public static synchronized void systemInit() {
-        //todo: what init tests do we need in setup?
+        //todo: what inits do we need for setup?
         /*if(systemInit)
             return;
         InternalFileStoreUtil.configFileStoreUtil(SETUP_MODULE_NAME, new SetupSharedDataInstance());*/

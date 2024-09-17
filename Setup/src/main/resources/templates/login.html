@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/setupLayout :: layout (~{::page}, #{SetupAppName})}">
+<th:block th:fragment="page">
+    <main role="main" class="container">
+        <div class="card-body">
+            <form method="post" class="col-12" th:object="${Login}">
+                <div class="form-group">
+                    <label for="serverUrl" th:text="#{ServerAddrLabel}"></label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="serverUrl"
+                               th:field="*{serverUrl}">
+                    </div>
+                    <label for="username" th:text="#{UsernameLabel}"></label>
+                    <div class="col-10">
+                        <input type="text" class="form-control" id="username"
+                               th:field="*{username}">
+                    </div>
+                    <label for="password" th:text="#{PasswordLabel}"></label>
+                    <div class="col-10">
+                        <input type="password" class="form-control" id="password"
+                               th:field="*{password}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</th:block>
+</html>
