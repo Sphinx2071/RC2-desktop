@@ -1,6 +1,5 @@
 package edu.uw.cse.ifrcdemo.setup.ui.health;
 
-import edu.uw.cse.ifrcdemo.setup.model.healthConfig.HealthConfig;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.RegistrationMode;
 import org.apache.logging.log4j.Logger;
 import org.apache.wink.json4j.JSONException;
@@ -20,13 +19,13 @@ import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
-import static edu.uw.cse.ifrcdemo.setup.model.healthConfig.HealthConfig.createConfig;
+import static edu.uw.cse.ifrcdemo.setup.ui.health.HealthConfigFormModel.createConfig;
 
 @Controller
 @RequestMapping("/healthconfig")
-@SessionAttributes(types = {HealthConfig.class})
+@SessionAttributes(types = {HealthConfigFormModel.class})
 public class HealthController {
-    private static final String HEALTH_CONFIG = "healthconfig/healthConfig";
+    private static final String HEALTH_CONFIG_VIEW = "healthconfig/healthConfig";
 
     private final Logger logger;
     private final TemplateEngine templateEngine;
@@ -37,21 +36,21 @@ public class HealthController {
     }
 
     @Valid
-    @ModelAttribute("HealthConfig")
-    public HealthConfig newHealthConfig(){
+    @ModelAttribute("healthConfigFormModel")
+    public HealthConfigFormModel newHealthConfigFormModel(){
         return createConfig();
     }
 
     @GetMapping
     public ModelAndView healthServerConfig(
-            @Valid @ModelAttribute("HealthConfig") HealthConfig healthConfig, BindingResult bindingResult, SessionStatus sessionStatus)
+            @Valid @ModelAttribute("healthConfigFormModel") HealthConfigFormModel healthConfigFormModel, BindingResult bindingResult, SessionStatus sessionStatus)
             throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException{
 
-        ModelAndView healthModelAndView = new ModelAndView(HEALTH_CONFIG);
+        ModelAndView healthModelAndView = new ModelAndView(HEALTH_CONFIG_VIEW);
 
-        healthConfig.setRegistrationModeList(Arrays.asList((RegistrationMode.values())));
+        healthConfigFormModel.setRegistrationModeList(Arrays.asList((RegistrationMode.values())));
 
-        healthModelAndView.addObject("healthConfig", healthConfig);
+        healthModelAndView.addObject("healthConfig", healthConfigFormModel);
         return healthModelAndView;
     }
 }

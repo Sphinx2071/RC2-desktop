@@ -19,13 +19,13 @@
 <main role="main" class="container">
     <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ConfigSrvBtnLabel})}"/>
     <div class="row">
-        <form method="post" class="col-12" th:object="${healthConfig}">
+        <form method="post" class="col-12" th:object="${healthConfigFormModel}">
             <div class="form-group row">
                 <label for="regMode" class="col-2 col-form-label"
                        th:text="#{RegistrationType}"></label>
                 <div class="col-10">
                     <select class="form-control" id="regMode" th:field="*{registrationMode}">
-                        <option th:each="registrationMode : ${healthConfig.registrationModeList}"
+                        <option th:each="registrationMode : ${healthConfigFormModel.registrationModeList}"
                                 th:value="${registrationMode}"
                                 th:text="${registrationMode.toString()}">
                         </option>

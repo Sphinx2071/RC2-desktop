@@ -1,22 +1,22 @@
-package edu.uw.cse.ifrcdemo.setup.model.healthConfig;
+package edu.uw.cse.ifrcdemo.setup.ui.health;
 
-import edu.uw.cse.ifrcdemo.setup.model.AbsConfig;
+import edu.uw.cse.ifrcdemo.setup.ui.AbsConfig;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
 
-public class HealthConfig extends AbsConfig {
-    private HealthConfig(){
+public class HealthConfigFormModel extends AbsConfig {
+    private HealthConfigFormModel(){
 
     }
 
-    public static HealthConfig createConfig(){
-        HealthConfig healthConfig = new HealthConfig();
-        healthConfig.module = Module.HEALTH;
-        return healthConfig;
+    public static HealthConfigFormModel createConfig(){
+        HealthConfigFormModel healthConfigFormModel = new HealthConfigFormModel();
+        healthConfigFormModel.module = Module.HEALTH;
+        return healthConfigFormModel;
     }
 
     @Override
     public String toString() {
-        return "HealthConfig{" +
+        return "HealthConfigFormModel{" +
                 "module=" + module +
                 ", registrationMode=" + registrationMode +
                 ", beneficiaryEntityFormChooser='" + beneficiaryEntityFormChooser + '\'' +

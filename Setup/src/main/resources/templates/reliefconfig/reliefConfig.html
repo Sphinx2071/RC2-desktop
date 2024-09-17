@@ -19,12 +19,12 @@
 <main role="main" class="container">
     <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ConfigSrvBtnLabel})}"/>
     <div class="card-body">
-        <form method="post" class="col-12" th:object="${reliefConfig}">
+        <form method="post" class="col-12" th:object="${reliefConfigFormModel}">
             <div class="form-group">
                 <label for="authType" th:text="#{WorkflowModeLabel}"></label>
                 <div class="col-10">
                     <select class="form-control" id="authType" name="authorizationType" th:field="*{authorizationType}">
-                        <option th:each="authorizationType : ${reliefConfig.authorizationTypeList}"
+                        <option th:each="authorizationType : ${reliefConfigFormModel.authorizationTypeList}"
                                 th:value="${authorizationType}"
                                 th:text="${authorizationType.toString()}">
                         </option>
@@ -33,7 +33,7 @@
                 <label for="regMode" th:text="#{RegistrationType}"></label>
                 <div class="col-10">
                     <select class="form-control" id="regMode" name="registrationMode" th:field="*{registrationModeList}">
-                        <option th:each="registrationMode : ${reliefConfig.registrationModeList}"
+                        <option th:each="registrationMode : ${reliefConfigFormModel.registrationModeList}"
                                 th:value="${registrationMode}"
                                 th:text="${registrationMode.toString()}">
                         </option>

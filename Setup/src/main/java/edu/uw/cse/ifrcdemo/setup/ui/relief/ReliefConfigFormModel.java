@@ -1,21 +1,21 @@
-package edu.uw.cse.ifrcdemo.setup.model.reliefConfig;
+package edu.uw.cse.ifrcdemo.setup.ui.relief;
 
-import edu.uw.cse.ifrcdemo.setup.model.AbsConfig;
+import edu.uw.cse.ifrcdemo.setup.ui.AbsConfig;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.AuthorizationType;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
 import java.util.List;
 
-public class ReliefConfig extends AbsConfig {
+public class ReliefConfigFormModel extends AbsConfig {
     public AuthorizationType authorizationType;
     public List<AuthorizationType> authorizationTypeList;
 
-    private ReliefConfig() {
+    private ReliefConfigFormModel() {
     }
 
-    public static ReliefConfig createConfig(){
-        ReliefConfig reliefConfig = new ReliefConfig();
-        reliefConfig.module = Module.RELIEF;
-        return  reliefConfig;
+    public static ReliefConfigFormModel createConfig(){
+        ReliefConfigFormModel reliefConfigFormModel = new ReliefConfigFormModel();
+        reliefConfigFormModel.module = Module.RELIEF;
+        return reliefConfigFormModel;
     }
 
     public AuthorizationType getAuthorizationType() {
@@ -35,7 +35,7 @@ public class ReliefConfig extends AbsConfig {
 
     @Override
     public String toString() {
-        return "ReliefConfig{" +
+        return "ReliefConfigFormModel{" +
                 "module=" + module +
                 ", authorizationType=" + authorizationType +
                 ", registrationMode=" + registrationMode +

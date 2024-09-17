@@ -1,10 +1,12 @@
-package edu.uw.cse.ifrcdemo.setup.model.login;
+package edu.uw.cse.ifrcdemo.setup.ui.login;
 
 import edu.uw.cse.ifrcdemo.setup.ui.common.CloudEndpointAuthFormModel;
+import org.springframework.context.annotation.Conditional;
 
 import javax.validation.constraints.NotNull;
 
-public class Login implements CloudEndpointAuthFormModel {
+
+public class LoginFormModel implements CloudEndpointAuthFormModel {
     private String serverUrl;
     private String username;
     private String password;
@@ -12,11 +14,11 @@ public class Login implements CloudEndpointAuthFormModel {
     @NotNull
     private String type;
 
-    private Login(){
+    private LoginFormModel(){
     }
 
-    public static Login createLogin(){
-        return new Login();
+    public static LoginFormModel createLogin(){
+        return new LoginFormModel();
     }
     @Override
     public String getServerUrl() {

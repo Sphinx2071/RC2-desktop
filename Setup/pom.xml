@@ -247,5 +247,9 @@
             <groupId>org.apache.wink</groupId>
             <artifactId>wink-json4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
     </dependencies>
 </project>

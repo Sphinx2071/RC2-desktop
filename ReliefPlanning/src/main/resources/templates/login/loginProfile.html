@@ -86,17 +86,17 @@
 
                     <button type="submit"
                             class="btn btn-primary btn-lg d-flex mx-auto text-center px-5 py-3"
-                            th:formaction="@{/login/downloadData}"
+                            th:formaction="@{/loginFormModel/downloadData}"
                             th:text="#{DownloadValidateAndContinue}"
                             data-target="#pleaseWaitModal" data-toggle="modal">
                     </button>
 
                     <div class="d-flex justify-content-end mt-1">
                         <a class="btn btn-secondary text-center mr-1" th:text="#{LocalDataDirectory}"
-                           th:href="@{/login/localData(profile=${profile.name})}"></a>
+                           th:href="@{/loginFormModel/localData(profile=${profile.name})}"></a>
                         <button type="submit"
                                 class="btn btn-secondary text-center"
-                                th:formaction="@{/login/lastSnapshot}"
+                                th:formaction="@{/loginFormModel/lastSnapshot}"
                                 th:text="#{LastGoodSnapshot}"
                                 data-target="#pleaseWaitModal" data-toggle="modal"></button>
                     </div>
@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <th:block th:insert="~{login/pleaseWaitModalFragment :: modal}"/>
+    <th:block th:insert="~{loginFormModel/pleaseWaitModalFragment :: modal}"/>
 </main>
 <script>
     'use strict';

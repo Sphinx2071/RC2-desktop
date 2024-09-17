@@ -1,6 +1,5 @@
 package edu.uw.cse.ifrcdemo.setup.ui.login;
 
-import edu.uw.cse.ifrcdemo.setup.model.login.Login;
 import org.apache.logging.log4j.Logger;
 import org.apache.wink.json4j.JSONException;
 import org.springframework.stereotype.Controller;
@@ -18,11 +17,11 @@ import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 
-import static edu.uw.cse.ifrcdemo.setup.model.login.Login.createLogin;
+import static edu.uw.cse.ifrcdemo.setup.ui.login.LoginFormModel.createLogin;
 
 @Controller
 @RequestMapping("/login")
-@SessionAttributes(types={Login.class})
+@SessionAttributes(types={LoginFormModel.class})
 public class LoginController {
     private static final String LOGIN = "login";
 
@@ -36,18 +35,18 @@ public class LoginController {
 
     @Valid
     @ModelAttribute("Login")
-    public Login loginForm(){
+    public LoginFormModel loginForm(){
         return createLogin();
     }
 
     @GetMapping
     public ModelAndView loginView(
-            @Valid @ModelAttribute("Login") Login login, BindingResult bindingResult, SessionStatus sessionStatus)
+            @Valid @ModelAttribute("Login") LoginFormModel loginFormModel, BindingResult bindingResult, SessionStatus sessionStatus)
             throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException {
 
         ModelAndView loginModelAndView = new ModelAndView(LOGIN);
 
-        loginModelAndView.addObject("login", login);
+        loginModelAndView.addObject("login", loginFormModel);
 
         return loginModelAndView;
     }
