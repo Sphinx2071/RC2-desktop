@@ -1,5 +1,6 @@
 package edu.uw.cse.ifrcdemo.setup.ui.relief;
 
+import edu.uw.cse.ifrcdemo.setup.ui.login.LoginFormModel;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.AuthorizationType;
 import org.apache.logging.log4j.Logger;
 import org.apache.wink.json4j.JSONException;
@@ -25,6 +26,7 @@ import static edu.uw.cse.ifrcdemo.setup.ui.relief.ReliefConfigFormModel.createCo
 @SessionAttributes(types={ReliefConfigFormModel.class})
 public class ReliefController {
     private static final String RELIEF_CONFIG_VIEW ="reliefconfig/reliefConfig";
+    private static final String LOGIN_VIEW ="login";
     private final Logger logger;
     private final TemplateEngine templateEngine;
 
@@ -57,8 +59,8 @@ public class ReliefController {
     public ModelAndView updateForm(@Valid @ModelAttribute("reliefConfigFormModel") ReliefConfigFormModel reliefConfigFormModel, BindingResult bindingResult, SessionStatus sessionStatus)
             throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException{
 
-        ModelAndView modelAndView = new ModelAndView(RELIEF_CONFIG_VIEW);
-        modelAndView.addObject("reliefConfig", reliefConfigFormModel);
+        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
+        modelAndView.addObject("loginFormModel", new LoginFormModel());
         return modelAndView;
     }
 }

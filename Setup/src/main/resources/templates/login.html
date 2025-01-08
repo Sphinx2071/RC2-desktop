@@ -5,26 +5,85 @@
 <th:block th:fragment="page">
     <main role="main" class="container">
         <div class="card-body">
-            <form method="post" class="col-12" th:object="${Login}">
+            <form method="post" class="col-12" th:object="${loginFormModel}">
                 <div class="form-group">
                     <label for="serverUrl" th:text="#{ServerAddrLabel}"></label>
                     <div class="col-10">
                         <input type="text" class="form-control" id="serverUrl"
-                               th:field="*{serverUrl}">
+                               th:field="*{serverUrl}" required>
                     </div>
                     <label for="username" th:text="#{UsernameLabel}"></label>
                     <div class="col-10">
                         <input type="text" class="form-control" id="username"
-                               th:field="*{username}">
+                               th:field="*{username}" required>
                     </div>
                     <label for="password" th:text="#{PasswordLabel}"></label>
                     <div class="col-10">
                         <input type="password" class="form-control" id="password"
-                               th:field="*{password}">
+                               th:field="*{password}" required>
+
                     </div>
+
+                    <div th:if="${error}"
+                         class="alert alert-danger"
+                         th:text="${error}">
+                    </div>
+
                 </div>
+                <button type="submit" class="btn btn-primary">
+                    Verify Server
+                </button>
             </form>
         </div>
     </main>
 </th:block>
 </html>
+
+<!--
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Server Setup - Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/login}"
+              th:object="${loginForm}"
+              method="post"
+              class="setup-form">
+
+            <div class="form-group">
+                <label for="hostname">Server Hostname</label>
+                <input type="text"
+                       th:field="*{hostname}"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Admin Username</label>
+                <input type="text"
+                       th:field="*{username}"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Admin Password</label>
+                <input type="password"
+                       th:field="*{password}"
+                       required>
+            </div>
+
+            <div th:if="${error}"
+                 class="alert alert-danger"
+                 th:text="${error}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Verify Server
+            </button>
+        </form>
+    </div>
+</body>
+</html>
+-->

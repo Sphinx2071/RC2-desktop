@@ -243,6 +243,7 @@ public class SetupApplication extends Application implements WebMvcConfigurer {
      * @param oldValue The old state value
      * @param newValue The new state value
      */
+    //todo: do i need a callback for setup?
     @Override
     public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
                         Worker.State newValue) {
