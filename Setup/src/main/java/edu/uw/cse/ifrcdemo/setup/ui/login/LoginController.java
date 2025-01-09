@@ -58,7 +58,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@ModelAttribute LoginFormModel loginForm, Model model) {
+    public String handleLogin(@ModelAttribute LoginFormModel loginForm, Model model)
+            throws IOException, JSONException, BackingStoreException, InvalidPreferencesFormatException{
         try {
             // Initialize and verify server connection using SyncClient
             syncClientService.initializeServer(
